@@ -2,27 +2,39 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <link href="../static/bootplus/css/bootplus.min.css" rel="stylesheet" media="screen">
-    <link href="../static/bootplus/css/bootplus-responsive.min.css" rel="stylesheet" media="screen">
-    <script src="http://code.jquery.com/jquery.js"></script>
-    <script src="/static/bootplus/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css">
     <title>Title</title>
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="navbar-inner">
-            <h1>asdf sadf asdf sadf asdf sadf</h1>
+    <nav class="navbar navbar-fixed-top navbar-dark bg-inverse">
+        <a class="navbar-brand" href="#">Project name</a>
+        <ul class="nav navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Contact</a>
+            </li>
+        </ul>
+    </nav>
+
+    {% block body %}
+    <div class="body">
+        <div class="container">
+            <form class="form" method="post" action="/">
+                <textarea rows="5" cols="30" name="contents1"></textarea>
+                <textarea rows="5" cols="30" name="contents2"></textarea>
+                <button type="submit" value="qwer">
+            </form>
         </div>
     </div>
 
-    {% block body %}
-    <form class="test" method="post" action="/">
-        <div class="container">
-            <textarea rows="5" cols="30" name="contents1"></textarea>
-            <textarea rows="5" cols="30" name="contents2"></textarea>
-        <button type="submit" value="qwer">
-    </div>
-    </form>
 
     {% endblock %}
 
