@@ -16,10 +16,25 @@
 #
 import webapp2
 
+from configs import JINJA_ENV
+from controller.test import test
+
+
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        self.response.write('Hello world!')
+        # self.response.write('Hello world!')
 
-app = webapp2.WSGIApplication([
-    ('/', MainHandler)
-], debug=True)
+        temp = self.request.get('contents1')
+        if temp == 'qwer':
+            self.redirect('/test')
+
+        self.response.write(JINJA_ENV.get_template('main.html').render())
+
+    def post(self):
+        temp = self.request.get('contents1')
+        if temp == 'qwer':
+            self.redirect('/test')
+
+app = webapp2.WSGIApplication([('/', MainHandler),
+                              ('/test', test)],
+                              debug=True)
