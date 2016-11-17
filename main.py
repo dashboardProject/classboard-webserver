@@ -20,7 +20,7 @@ from database_Model import User
 from google.appengine.api import users
 from configs import JINJA_ENV, MAIN_PAGE
 from utils.userNgroupQuery import selectUser
-from controller.sign import Sign_Up, test
+from controller.sign import Sign_Up, Manage_User_Data, test
 
 
 class Main(webapp2.RequestHandler):
@@ -48,6 +48,6 @@ class Main(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([('/', Main),
                                ('/signup', Sign_Up),
-                               ('/signup', Sign_Up),
+                               ('/updateuserinfo', Manage_User_Data),
                                ('/test', test)],
                               debug=True)
