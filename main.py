@@ -17,9 +17,10 @@
 import webapp2
 
 from configs import JINJA_ENV
-from controller.test import test
+from controller.sign import Sign_In, Sign_Up
+from utils.decorators import userCheck
 
-
+@userCheck
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         # self.response.write('Hello world!')
@@ -36,5 +37,6 @@ class MainHandler(webapp2.RequestHandler):
             self.redirect('/test')
 
 app = webapp2.WSGIApplication([('/', MainHandler),
-                              ('/test', test)],
+                               ('/signin', Sign_In),
+                               ('/signup', Sign_Up)],
                               debug=True)

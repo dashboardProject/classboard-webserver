@@ -22,7 +22,7 @@ class Device(ndb.Model):
 
 class Content(ndb.Model):
     contentId = ndb.IntegerProperty()
-    contentName = ndb.StringProperty(indexed=False)
+    contentName = ndb.StringProperty()
     googleCalendarId = ndb.StringProperty()
     madeGroupId = ndb.StringProperty()
     madeUserId = ndb.StringProperty()
