@@ -16,27 +16,38 @@
 #
 import webapp2
 
-from configs import JINJA_ENV
-from controller.sign import Sign_In, Sign_Up
-from utils.decorators import userCheck
+from database_Model import User
+from google.appengine.api import users
+from configs import JINJA_ENV, MAIN_PAGE
+from utils.userNgroupQuery import selectUser
+from controller.sign import Sign_In, Sign_Up, test
 
-@userCheck
-class MainHandler(webapp2.RequestHandler):
+
+class Main(webapp2.RequestHandler):
+    # access mainpage
     def get(self):
-        # self.response.write('Hello world!')
+        user = users.get_current_user()
 
-        temp = self.request.get('contents1')
-        if temp == 'qwer':
-            self.redirect('/test')
+        if user and selectUser(user.user_id()).count is 1:
+            # add query and template data
 
-        self.response.write(JINJA_ENV.get_template('main.html').render())
+            self.response.write(JINJA_ENV.get_template(MAIN_PAGE).render())
 
+        else:
+            self.response.write(JINJA_ENV.get_template(MAIN_PAGE).render())
+
+    # sign-in request
     def post(self):
-        temp = self.request.get('contents1')
-        if temp == 'qwer':
-            self.redirect('/test')
+        user = users.get_current_user()
 
-app = webapp2.WSGIApplication([('/', MainHandler),
+        if user and selectUser(user.user_id()).count is 0:
+            self.response.write(JINJA_ENV.get_template(Sign_Up).render())
+
+        else:
+            self.redirect(users.create_login_url(self.request.uri))
+
+app = webapp2.WSGIApplication([('/', Main),
                                ('/signin', Sign_In),
-                               ('/signup', Sign_Up)],
+                               ('/signup', Sign_Up),
+                               ('/test', test)],
                               debug=True)

@@ -1,16 +1,16 @@
 from database_Model import *
 
 def selectContentWithId(contentId):
-    return Content.query(Content.contentId == contentId)
+    return Content.query().filter(Content.contentId == contentId)
 
 def selectContentWithName(contentName):
-    return Content.query(Content.contentName == contentName)
+    return Content.query().filter(Content.contentName == contentName)
 
 def selectContentWithCalendar(calendarId):
-    return Content.query(Content.googleCalendarId == calendarId)
+    return Content.query().filter(Content.googleCalendarId == calendarId)
 
 def selectContentWithGroup(groupId):
-    return Content.query(Content.madeGroupId == groupId)
+    return Content.query().filter(Content.madeGroupId == groupId)
 
 def selectContentWithUser(userId):
-    return Content.query(Content.madeUserId == userId)
+    return Content.query().filter(Content.madeUserId == userId)

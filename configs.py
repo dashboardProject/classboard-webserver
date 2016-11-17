@@ -5,6 +5,6 @@ JINJA_ENV = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.join(os.pa
                                extensions=['jinja2.ext.autoescape'],
                                autoescape=True)
 
-MAIN_PAGE = '/'
-SIGNIN_PAGE = '/'#''/signin'
-SIGNUP_PAGE = '/'#'signup'
+MAIN_PAGE = '/main.html'
+SIGNIN_PAGE = '/main.html'#''/signin'
+SIGNUP_PAGE = '/main.html'#'signup'
