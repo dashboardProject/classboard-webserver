@@ -6,5 +6,4 @@ JINJA_ENV = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.join(os.pa
                                autoescape=True)
 
 MAIN_PAGE = '/main.html'
-SIGNIN_PAGE = '/main.html'#''/signin'
 SIGNUP_PAGE = '/main.html'#'signup'

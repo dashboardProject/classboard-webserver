@@ -20,7 +20,7 @@ from database_Model import User
 from google.appengine.api import users
 from configs import JINJA_ENV, MAIN_PAGE
 from utils.userNgroupQuery import selectUser
-from controller.sign import Sign_In, Sign_Up, test
+from controller.sign import Sign_Up, test
 
 
 class Main(webapp2.RequestHandler):
@@ -47,7 +47,7 @@ class Main(webapp2.RequestHandler):
             self.redirect(users.create_login_url(self.request.uri))
 
 app = webapp2.WSGIApplication([('/', Main),
-                               ('/signin', Sign_In),
+                               ('/signup', Sign_Up),
                                ('/signup', Sign_Up),
                                ('/test', test)],
                               debug=True)
