@@ -1,10 +1,10 @@
 from database_Model import *
 
-def selectUser(userId):
-    return User.query(User.userId == userId)
+def selectUser(userMail):
+    return User.query(User.userMail == userMail)
 
-def selectGroup(groupId):
-    return Group.query(Group.groupId == groupId)
+def selectGroup(groupName):
+    return Group.query(Group.groupName == groupName)
 
 def selectUsersInGroup(groupId):
     return GroupMap.query(GroupMap.groupId == groupId)
