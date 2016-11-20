@@ -16,7 +16,6 @@
 #
 import webapp2
 
-from database_Model import User
 from google.appengine.api import users
 from configs import JINJA_ENV, MAIN_PAGE
 from utils.userNgroupQuery import selectUser
@@ -28,7 +27,7 @@ class Main(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
 
-        if user and selectUser(user.user_id()).count is 1:
+        if user and selectUser(user.email()).count is 1:
             # add query and template data
 
             self.response.write(JINJA_ENV.get_template(MAIN_PAGE).render())

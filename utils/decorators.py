@@ -1,7 +1,8 @@
 import webapp2
+
+from configs import *
 from google.appengine.api import users
 from utils.userNgroupQuery import selectUser
-from configs import *
 
 def userCheck(func):
     def decorated_function(*args, **kwargs):
