@@ -45,8 +45,8 @@ class Main(webapp2.RequestHandler):
         else:
             self.redirect(users.create_login_url(self.request.uri))
 
-app = webapp2.WSGIApplication([('/', Main),
-                               ('/signup', Sign_Up),
-                               ('/updateuserinfo', Manage_User_Data),
-                               ('/test', test)],
+app = webapp2.WSGIApplication([webapp2.Route('/', Main, name='main'),
+                               webapp2.Route('/signup', Sign_Up, name='signup'),
+                               webapp2.Route('/updateuserinfo', Manage_User_Data),
+                               webapp2.Route('/test', test, name='test')],
                               debug=True)

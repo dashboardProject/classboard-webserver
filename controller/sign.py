@@ -16,12 +16,13 @@ class Sign_Up(webapp2.RequestHandler):
 
         self.response.write(JINJA_ENV.get_template(MAIN_PAGE).render())
 
-@userCheck
 class Manage_User_Data(webapp2.RequestHandler):
+    @userCheck
     def post(self):
         self.response.write('sadf')
 
 class test(webapp2.RequestHandler):
+    @userCheck
     def get(self):
         user = users.get_current_user()
-        self.response.write(str(user.nickname()))
+        self.response.write(user.email())

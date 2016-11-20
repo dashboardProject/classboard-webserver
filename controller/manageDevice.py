@@ -6,14 +6,14 @@ from utils.userNgroupQuery import selectUser
 from google.appengine.api import users
 from configs import JINJA_ENV, SIGNUP_PAGE, MAIN_PAGE
 
-class RegisterDevice(webapp2.RequestHandler):
+class Register_Device(webapp2.RequestHandler):
     def post(self):
         self.response.write(JINJA_ENV.get_template().render())
 
-class MappingContent(webapp2.RequestHandler):
+class Mapping_Content(webapp2.RequestHandler):
     def post(self):
         self.response.write(JINJA_ENV.get_template().render())
 
-class ModifyDeviceInfo(webapp2.RequestHandler):
+class Modify_DeviceInfo(webapp2.RequestHandler):
     def post(self):
         self.response.write(JINJA_ENV.get_template().render())
