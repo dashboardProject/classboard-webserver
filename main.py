@@ -29,10 +29,10 @@ class Main(webapp2.RequestHandler):
         if user and selectUser(user.email()).count is 1:
             # add query and template data
 
-            self.response.write(JINJA_ENV.get_template(MANAGEMENT_CONTENTS).render())
+            self.response.write(JINJA_ENV.get_template(MAIN_PAGE).render())
 
         else:
-            self.response.write(JINJA_ENV.get_template(MANAGEMENT_CONTENTS).render())
+            self.response.write(JINJA_ENV.get_template(MAIN_PAGE).render())
 
     # sign-in request
     def post(self):
@@ -44,8 +44,17 @@ class Main(webapp2.RequestHandler):
         else:
             self.redirect(users.create_login_url(self.request.uri))
 
+
+class tutorial(webapp2.RequestHandler):
+    # access mainpage
+    def get(self):
+        # add query and template data
+        self.response.write(JINJA_ENV.get_template(TUTORIAL_PAGE).render())
+
+
+
 app = webapp2.WSGIApplication([webapp2.Route('/', Main, name='main'),
                                webapp2.Route('/signup', Sign_Up, name='signup'),
                                webapp2.Route('/updateuserinfo', Manage_User_Data),
-                               webapp2.Route('/test', test, name='test')],
+                               webapp2.Route('/tutorial', tutorial)],
                               debug=True)
