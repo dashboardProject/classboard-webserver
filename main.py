@@ -17,10 +17,9 @@
 import webapp2
 
 from google.appengine.api import users
-from configs import JINJA_ENV, MAIN_PAGE
+from configs import JINJA_ENV, MAIN_PAGE, MANAGEMENT_PAGE, MANAGEMENT_GROUP, MANAGEMENT_DEVICE, MANAGEMENT_CONTENTS, TUTORIAL_PAGE
 from utils.userNgroupQuery import selectUser
 from controller.sign import Sign_Up, Manage_User_Data, test
-
 
 class Main(webapp2.RequestHandler):
     # access mainpage
@@ -30,10 +29,10 @@ class Main(webapp2.RequestHandler):
         if user and selectUser(user.email()).count is 1:
             # add query and template data
 
-            self.response.write(JINJA_ENV.get_template(MAIN_PAGE).render())
+            self.response.write(JINJA_ENV.get_template(MANAGEMENT_CONTENTS).render())
 
         else:
-            self.response.write(JINJA_ENV.get_template(MAIN_PAGE).render())
+            self.response.write(JINJA_ENV.get_template(MANAGEMENT_CONTENTS).render())
 
     # sign-in request
     def post(self):
