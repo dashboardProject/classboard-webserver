@@ -17,7 +17,7 @@
 import webapp2
 
 from google.appengine.api import users
-from configs import JINJA_ENV, MAIN_PAGE, MANAGEMENT_PAGE, MANAGEMENT_GROUP, MANAGEMENT_DEVICE, MANAGEMENT_CONTENTS, TUTORIAL_PAGE
+import configs
 from utils.userNgroupQuery import selectUser
 from controller.sign import Sign_Up, Manage_User_Data, test
 
@@ -29,10 +29,10 @@ class Main(webapp2.RequestHandler):
         if user and selectUser(user.email()).count is 1:
             # add query and template data
 
-            self.response.write(JINJA_ENV.get_template(MAIN_PAGE).render())
+            self.response.write(configs.JINJA_ENV.get_template(configs.MAIN_PAGE).render())
 
         else:
-            self.response.write(JINJA_ENV.get_template(MAIN_PAGE).render())
+            self.response.write(configs.JINJA_ENV.get_template(configs.MAIN_PAGE).render())
 
     # sign-in request
     def post(self):
@@ -45,16 +45,47 @@ class Main(webapp2.RequestHandler):
             self.redirect(users.create_login_url(self.request.uri))
 
 
-class tutorial(webapp2.RequestHandler):
+class Tutorial(webapp2.RequestHandler):
     # access mainpage
     def get(self):
         # add query and template data
-        self.response.write(JINJA_ENV.get_template(TUTORIAL_PAGE).render())
+        self.response.write(configs.JINJA_ENV.get_template(configs.TUTORIAL_PAGE).render())
 
+
+class Management(webapp2.RequestHandler):
+    # access mainpage
+    def get(self):
+        # add query and template data
+        self.response.write(configs.JINJA_ENV.get_template(configs.MANAGEMENT_PAGE).render())
+
+class ManagementGroup(webapp2.RequestHandler):
+    # access mainpage
+    def get(self):
+        # add query and template data
+        self.response.write(configs.JINJA_ENV.get_template(configs.MANAGEMENT_GROUP).render())
+
+
+class ManagementDevice(webapp2.RequestHandler):
+    # access mainpage
+    def get(self):
+        # add query and template data
+        self.response.write(configs.JINJA_ENV.get_template(configs.MANAGEMENT_DEVICE).render())
+
+
+class ManagementContents(webapp2.RequestHandler):
+    # access mainpage
+    def get(self):
+        # add query and template data
+        self.response.write(configs.JINJA_ENV.get_template(configs.MANAGEMENT_CONTENTS).render())
 
 
 app = webapp2.WSGIApplication([webapp2.Route('/', Main, name='main'),
                                webapp2.Route('/signup', Sign_Up, name='signup'),
                                webapp2.Route('/updateuserinfo', Manage_User_Data),
-                               webapp2.Route('/tutorial', tutorial)],
-                              debug=True)
+                               webapp2.Route('/tutorial', Ttutorial),
+                               webapp2.Route('/management', Management),
+                               webapp2.Route('/management/group', ManagementGroup),
+                               webapp2.Route('/management/device', ManagementDevice),
+                               webapp2.Route('/management/contents', ManagementContents),
+                               ],debug=True)
+
