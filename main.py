@@ -39,7 +39,7 @@ class Main(webapp2.RequestHandler):
         user = users.get_current_user()
 
         if user and selectUser(user.user_id()).count is 0:
-            self.response.write(JINJA_ENV.get_template(Sign_Up).render())
+            self.response.write(configs.JINJA_ENV.get_template(Sign_Up).render())
 
         else:
             self.redirect(users.create_login_url(self.request.uri))
@@ -82,7 +82,7 @@ class ManagementContents(webapp2.RequestHandler):
 app = webapp2.WSGIApplication([webapp2.Route('/', Main, name='main'),
                                webapp2.Route('/signup', Sign_Up, name='signup'),
                                webapp2.Route('/updateuserinfo', Manage_User_Data),
-                               webapp2.Route('/tutorial', Ttutorial),
+                               webapp2.Route('/tutorial', Tutorial),
                                webapp2.Route('/management', Management),
                                webapp2.Route('/management/group', ManagementGroup),
                                webapp2.Route('/management/device', ManagementDevice),
