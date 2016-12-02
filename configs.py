@@ -12,3 +12,5 @@ MANAGEMENT_GROUP = '/management_group.html'
 MANAGEMENT_DEVICE = '/management_device.html'
 MANAGEMENT_CONTENTS = '/management_contents.html'
 TUTORIAL_PAGE = '/tutorial.html'
+
+DEVICE_MAIN = '/d_init.html'

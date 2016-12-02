@@ -20,6 +20,7 @@ from google.appengine.api import users
 import configs
 from utils.userNgroupQuery import selectUser
 from controller.sign import Sign_Up, Manage_User_Data, test
+import json
 
 class Main(webapp2.RequestHandler):
     # access mainpage
@@ -78,7 +79,24 @@ class ManagementContents(webapp2.RequestHandler):
         # add query and template data
         self.response.write(configs.JINJA_ENV.get_template(configs.MANAGEMENT_CONTENTS).render())
 
-
+class DeviceMain(webapp2.RequestHandler):
+    # access mainpage
+    def get(self,dkey):
+        # add query and template data
+        self.response.write(configs.JINJA_ENV.get_template(configs.DEVICE_MAIN).render())
+        
+class DeviceMethod(webapp2.RequestHandler):
+    # access mainpage
+    def get(self,dkey,method):
+        self.response.headers['Content-Type'] = 'application/json'   
+        obj = {
+            'dkey': dkey, 
+            'dname': '446',
+            'start': '8:00',
+            'end':'20:00'
+          } 
+        self.response.out.write(json.dumps(obj))
+        
 app = webapp2.WSGIApplication([webapp2.Route('/', Main, name='main'),
                                webapp2.Route('/signup', Sign_Up, name='signup'),
                                webapp2.Route('/updateuserinfo', Manage_User_Data),
@@ -87,5 +105,7 @@ app = webapp2.WSGIApplication([webapp2.Route('/', Main, name='main'),
                                webapp2.Route('/management/group', ManagementGroup),
                                webapp2.Route('/management/device', ManagementDevice),
                                webapp2.Route('/management/contents', ManagementContents),
+                               webapp2.Route(r'/d/<dkey:\S{8}><:/?>', DeviceMain),
+                               webapp2.Route(r'/d/<dkey:\S{8}>/<method:(info|mod)><:/?>', DeviceMethod),
                                ],debug=True)
 
