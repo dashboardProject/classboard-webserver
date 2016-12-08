@@ -18,7 +18,7 @@ def userCheck(func):
                 return func(self, *args)
 
             else:
-                return webapp2.redirect_to('main')
+                return webapp2.redirect_to('signup')
 
         # not sign-in google account yet
         else:
