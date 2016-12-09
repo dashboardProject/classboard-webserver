@@ -14,7 +14,7 @@ def userCheck(func):
         # check google account
         if user:
             # check app account
-            if selectUser(user.user_id()).count is 1:
+            if selectUser(user.email()).count() is 1:
                 return func(self, *args)
 
             else:
