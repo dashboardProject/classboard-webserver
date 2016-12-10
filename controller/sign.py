@@ -1,5 +1,5 @@
 import webapp2
-import logging
+
 from database_Model import User
 from utils.decorators import userCheck
 from utils.userNgroupQuery import selectUser
