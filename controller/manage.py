@@ -4,7 +4,7 @@ import webapp2
 import logging
 from database_Model import Group, GroupMap
 from utils.decorators import userCheck
-from utils.userNgroupQuery import selectUser, selectGroupsOfUser, selectGroup
+from utils.userNgroupQuery import selectUser, selectGroupsOfUser, selectGroup, selectUsersInGroup
 from utils.deviceQuery import selectDeviceWithGroup
 from google.appengine.api import users
 from configs import JINJA_ENV, TUTORIAL_PAGE, MANAGEMENT_PAGE,MANAGEMENT_CONTENTS,\
@@ -28,6 +28,7 @@ class Management(webapp2.RequestHandler):
             tempList = selectGroupsOfUser(userId).fetch()
 
             groupList = [selectGroup(None, i.groupId) for i in tempList]
+            groupList = sorted(groupList, key=lambda i:i.groupName)
             deviceCountList = [selectDeviceWithGroup(i.key.id()).count() for i in groupList]
 
         except Exception as e:
@@ -38,14 +39,6 @@ class Management(webapp2.RequestHandler):
                            'deviceCount' : deviceCountList,}
 
         self.response.write(JINJA_ENV.get_template(MANAGEMENT_PAGE).render(template_values))
-
-
-class ManagementGroup(webapp2.RequestHandler):
-    # access mainpage
-    @userCheck
-    def get(self):
-        # add query and template data
-        self.response.write(JINJA_ENV.get_template(MANAGEMENT_GROUP).render())
 
 
 class MakeGroup(webapp2.RequestHandler):
@@ -59,9 +52,22 @@ class MakeGroup(webapp2.RequestHandler):
         userId = selectUser(user.email()).get().key.id()
 
         groupName = self.request.get('name')
-        newGroupId = Group(groupName = groupName).put().get().key.id()
 
-        GroupMap(userId = userId, groupId = newGroupId).put()
+        if selectGroup(groupName).count() is 0:
+            newGroupId = Group(groupName = groupName).put().get().key.id()
+            GroupMap(userId = userId, groupId = newGroupId).put()
+
+            self.redirect('/management/group%d'%(newGroupId), True)
+
+
+class ManagementGroup(webapp2.RequestHandler):
+    # access mainpage
+    @userCheck
+    def get(self, *args):
+        # add query and template data
+        userInfo = selectUsersInGroup(int(args[0])).fetch()
+        
+        self.response.write(JINJA_ENV.get_template(MANAGEMENT_GROUP).render())
 
 
 class ManagementDevice(webapp2.RequestHandler):
