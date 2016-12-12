@@ -14,11 +14,11 @@ def userCheck(func):
         # check google account
         if user:
             # check app account
-            if selectUser(user.email()).count() is 1:
-                return func(self, *args)
+            if selectUser(user.email()).count() is 0:
+                return webapp2.redirect_to('signup')
 
             else:
-                return webapp2.redirect_to('signup')
+                return func(self, *args)
 
         # not sign-in google account yet
         else:

@@ -3,6 +3,7 @@ from google.appengine.ext import ndb
 
 class User(ndb.Model):
     userMail = ndb.StringProperty()
+    nickname = ndb.StringProperty()
     lastSignInTime = ndb.DateTimeProperty(auto_now=True, indexed=False)
     signUpDate = ndb.DateTimeProperty(auto_now_add=True, indexed=False)
 
@@ -12,7 +13,7 @@ class Group(ndb.Model):
 
 
 class GroupMap(ndb.Model):
-    userId = ndb.IntegerProperty()
+    userMail = ndb.StringProperty()
     groupId = ndb.IntegerProperty()
 
 

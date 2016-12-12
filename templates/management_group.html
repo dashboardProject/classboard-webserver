@@ -146,21 +146,16 @@
                                     <thead>
                                         <tr>
                                             <th>Email Address</th>
-                                            <th>Name</th>
-                                            <th>Etc</th>
+                                            <th>Nickname</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    {% for i in userInfo %}
                                         <tr>
-                                            <td>dkfdsm@naver.com</td>
-                                            <td>정지은</td>
-                                            <td>null</td>
+                                            <td>{{ i.userMail }}</td>
+                                            <td>{{ i.nickname }}</td>
                                         </tr>
-                                        <tr>
-                                            <td>sdfnksd@naver.com</td>
-                                            <td>홍길동</td>
-                                            <td>null</td>
-                                        </tr>
+                                    {% endfor %}
                                     </tbody>
                                 </table>
                             </div>
@@ -168,8 +163,8 @@
 
                         <div class="form-group">
                             <label>관리자 초대</label>
-                            <input class="form-control" placeholder="메일주소 입력" style="width:400px">
-                            <button>초대</button>
+                            <input id="invitaioinMail" class="form-control" placeholder="메일주소 입력" style="width:400px">
+                            <button onclick="invite({{ groupId }})">초대</button>
                         </div>
 
 
@@ -184,6 +179,24 @@
         </div>
         <!-- /#wrapper -->
     </body>
+
+
+    <script>
+    function invite(gid) {
+        var mail = document.getElementById('invitaioinMail').value
+
+        if(mail.indexOf('@') > 0){
+            $.ajax({
+                url : "/management/group" + gid + "/invite",
+                type: "post",
+                dataType : "json",
+                data : JSON.stringify({"invitationMail" : mail})
+            })
+        }
+        else
+            alert('It does not conform to the format.')
+    }
+    </script>
 
     {%  endblock -%}
 

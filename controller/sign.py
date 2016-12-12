@@ -1,5 +1,5 @@
 import webapp2
-
+import time
 from database_Model import User
 from utils.decorators import userCheck
 from utils.userNgroupQuery import selectUser
@@ -14,7 +14,7 @@ class SignIn(webapp2.RequestHandler):
             userMail = user.email()
 
             if selectUser(userMail).count() is 0:
-                self.response.write(JINJA_ENV.get_template(SIGNUP_PAGE).render())
+                self.redirect_to('signup')
 
             else:
                 self.redirect_to('management')
@@ -25,11 +25,16 @@ class SignIn(webapp2.RequestHandler):
 
 class SignUp(webapp2.RequestHandler):
     def get(self):
+        self.response.write(JINJA_ENV.get_template(SIGNUP_PAGE).render())
+
+    def post(self):
         user = users.get_current_user()
         userMail = user.email()
+        nickname = user.nickname()
 
         if selectUser(userMail).count() is 0:
-            User(userMail = userMail).put()
+            User(userMail = userMail, nickname=nickname).put()
+            time.sleep(1)
 
         self.redirect_to('management')
 
