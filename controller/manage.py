@@ -67,9 +67,10 @@ class ManagementGroup(webapp2.RequestHandler):
         # add query and template data
         userData = selectUsersInGroup(int(args[0])).fetch()
         userInfo = [selectUser(i.userMail).get() for i in userData]
-
+        logging.critical(userInfo)
         template_values = {'userInfo': userInfo,
-                           'groupId' : int(args[0]), }
+                           'groupId' : int(args[0]),
+                           'totalUser' : userData, }
 
         self.response.write(JINJA_ENV.get_template(MANAGEMENT_GROUP).render(template_values))
 

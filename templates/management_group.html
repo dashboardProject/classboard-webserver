@@ -150,10 +150,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    {% for i in userInfo %}
+                                    {% for i in range(userInfo|length) %}
                                         <tr>
-                                            <td>{{ i.userMail }}</td>
-                                            <td>{{ i.nickname }}</td>
+                                        {% if userInfo[i] %}
+                                            <td>{{ userInfo[i].userMail }}</td>
+                                            <td>{{ userInfo[i].nickname }}</td>
+                                        {% else %}
+                                            <td>{{ totalUser[i].userMail }}</td>
+                                            <td>...ing...</td>
+                                        {% endif %}
                                         </tr>
                                     {% endfor %}
                                     </tbody>
