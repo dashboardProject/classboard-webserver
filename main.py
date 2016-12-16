@@ -21,7 +21,8 @@ from configs import JINJA_ENV, MAIN_PAGE
 from utils.userNgroupQuery import selectUser
 from controller.sign import SignIn, SignUp, ManageUserData
 from controller.manage import Tutorial, Management, ManagementContents, ManagementDevice, ManagementGroup,\
-                                DeviceMain, DeviceMethod, MakeGroup, InvitationUser, SecessionUser, GroupRename
+                                 MakeGroup, InvitationUser, SecessionUser, GroupRename
+from controller.device import DeviceMain, DeviceMethod
 
 class Main(webapp2.RequestHandler):
     # access mainpage
