@@ -139,24 +139,3 @@ class ManagementContents(webapp2.RequestHandler):
         # add query and template data
         self.response.write(JINJA_ENV.get_template(MANAGEMENT_CONTENTS).render())
 
-
-class DeviceMain(webapp2.RequestHandler):
-    # access mainpage
-    @userCheck
-    def get(self, dkey):
-        # add query and template data
-        self.response.write(JINJA_ENV.get_template(DEVICE_MAIN).render())
-
-
-class DeviceMethod(webapp2.RequestHandler):
-    # access mainpage
-    def get(self, dkey, method):
-        self.response.headers['Content-Type'] = 'application/json'
-        obj = {
-            'dkey': dkey,
-            'dname': '446',
-            'start': '8:00',
-            'end': '20:00'
-        }
-
-        self.response.out.write(json.dumps(obj))
