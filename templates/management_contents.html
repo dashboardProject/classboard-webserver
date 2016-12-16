@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 
 <head>
 
@@ -118,11 +118,39 @@
                     <!-- /.col-lg-12 -->
                 </div>
                 <!-- /.row -->
-                <div class="row">
-                    <div class="col-lg-12">
+                <br>
+                        <div class="form-group">
+                            <input class="form-control" placeholder="콘텐츠 이름" style="width:300px"><br>
+                            <input class="form-control" placeholder="캘린더 ID" style="width:300px; display: inline-block">
 
-                    <!-- 내용 채울 부분-->
+                            <button style="border:0px; width:30px; height:30px; border-radius:15px; -moz-border-radius : 25px; -webkit-border-radius : 25px; -ms-border-radius :25px; -khtml-border-radius : 25px; -o-border-radius :25px; background-color:#fed136" class="btn btn-default" data-target="#layerpop" data-toggle="modal"><div style="color:white;">?</div></button>
 
+                            <div class="modal fade" id="layerpop">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <!-- header -->
+                                  <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">×</button>
+                                    <!-- header title -->
+                                    <h4 class="modal-title">도움말</h4>
+                                  </div>
+                                  <!-- body -->
+                                  <div class="modal-body">
+                                      <img style="padding-left: 25px" src="/static/img/modal_img.png">
+                                      <br>캘린더 ID : 원하는 캘린더 환경설정에 들어간 뒤,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                      캘린더 ID를 복사+붙여넣기를 해주세요.(위 그림 참고)
+                                  </div>
+                                  <!-- Footer -->
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                        </div>
+
+                        <button>변경</button>
 
                     </div>
                 </div>
