@@ -97,9 +97,8 @@ class GroupRename(webapp2.RequestHandler):
     def get(self, *args):
         gid = int(args[0])
         newName = self.request.get('newName')
-        logging.critical(newName)
-        temp = selectGroup(None, args[0]).get()
-        logging.critical(temp)
+
+        temp = selectGroup(None, groupId=gid)
         temp.groupName = newName
         temp.put()
 

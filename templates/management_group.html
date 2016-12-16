@@ -131,11 +131,11 @@
                         <br>
                         <h4>그룹정보 설정</h4>
 
-                        <div class="form-group">
+                        <form class="form-group">
                             <label>그룹명</label>
-                            <input type="text" id="newName" class="form-control" placeholder="그룹명 입력" style="width:400px">
-                            <button onclick="location.href='/management/{{ groupId }}/group/rename'">변경</button>
-                        </div>
+                            <input type="text" name="newName" class="form-control" placeholder="그룹명 입력" style="width:400px">
+                            <button type="submit" formaction="/management/{{ groupId }}/group/rename">변경</button>
+                        </form>
 
                         <br><br><br>
                         <h4>공동 관리자 설정</h4>
