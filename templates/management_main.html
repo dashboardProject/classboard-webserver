@@ -95,7 +95,7 @@
             {% for i in range(0, groupInfo|length) %}
                 <div class="row">
                     <div class="col-lg-3 col-md-6">
-                        <a href="/management/group{{ groupInfo[i].key.id() }}">
+                        <a href="/management/{{ groupInfo[i].key.id() }}/group">
                             <div class="panel panel-yellow" style="width:800px; margin-left:100px;">
                                 <div class="panel-heading">
                                     <div class="row">

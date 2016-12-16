@@ -14,3 +14,6 @@ def selectUsersInGroup(groupId):
 
 def selectGroupsOfUser(userMail):
     return GroupMap.query(GroupMap.userMail == userMail)
+
+def selectMap(userMail, groupId):
+    return GroupMap.query(GroupMap.userMail == userMail, GroupMap.groupId == groupId)

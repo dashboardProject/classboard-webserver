@@ -94,7 +94,7 @@
                         <ul class="nav" id="side-menu">
 
                             <li>
-                                <a href="/management/group" style="color:#444444"><i class="fa fa-folder-open-o fa-fw"></i> 그룹관리</a>
+                                <a href="/management/{{ groupId }}/group" style="color:#444444"><i class="fa fa-folder-open-o fa-fw"></i> 그룹관리</a>
                             </li>
 
                             <li>
@@ -125,7 +125,7 @@
                         <h4>그룹탈퇴</h4>
                         <div class="form-group">
                         <h6 style="color:#787878">하단 버튼을 클릭하면 해당 그룹이 탈퇴처리됩니다.</h6>
-                        <button>탈퇴</button>
+                        <button onclick="location.href='/management/{{ groupId }}/group/secession'">탈퇴</button>
                         </div>
 
                         <br>
@@ -133,9 +133,9 @@
 
                         <div class="form-group">
                             <label>그룹명</label>
-                            <input class="form-control" placeholder="그룹명 입력" style="width:400px">
+                            <input type="text" id="newName" class="form-control" placeholder="그룹명 입력" style="width:400px">
+                            <button onclick="location.href='/management/{{ groupId }}/group/rename'">변경</button>
                         </div>
-                        <button>변경</button>
 
                         <br><br><br>
                         <h4>공동 관리자 설정</h4>
@@ -188,6 +188,23 @@
 
     <script>
     function invite(gid) {
+        var mail = document.getElementById('invitaioinMail').value
+
+        if(mail.indexOf('@') > 0){
+            $.ajax({
+                url : "/management/" + gid + "/group/invite",
+                type: "post",
+                dataType : "json",
+                data : JSON.stringify({"invitationMail" : mail})
+            })
+        }
+        else
+            alert('It does not conform to the format.')
+    }
+    </script>
+
+    <script>
+    function secession(gid) {
         var mail = document.getElementById('invitaioinMail').value
 
         if(mail.indexOf('@') > 0){
