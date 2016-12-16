@@ -1,11 +1,13 @@
 import json
+import time
 import webapp2
 
 import logging
 from database_Model import Group, GroupMap
 from utils.decorators import userCheck
-from utils.userNgroupQuery import selectUser, selectGroupsOfUser, selectGroup, selectUsersInGroup
+from utils.userNgroupQuery import selectUser, selectGroupsOfUser, selectGroup, selectUsersInGroup, selectMap
 from utils.deviceQuery import selectDeviceWithGroup
+from utils.contentQuery import selectContentWithGroup
 from google.appengine.api import users, mail
 from configs import JINJA_ENV, TUTORIAL_PAGE, MANAGEMENT_PAGE,MANAGEMENT_CONTENTS,\
                       MANAGEMENT_GROUP, MANAGEMENT_DEVICE, DEVICE_MAIN, MAKE_GROUP
@@ -57,7 +59,8 @@ class MakeGroup(webapp2.RequestHandler):
             newGroupId = Group(groupName = groupName).put().get().key.id()
             GroupMap(userMail=userMail, groupId=newGroupId).put()
 
-            self.redirect('/management/group%d'%(newGroupId), True)
+        time.sleep(1)
+        self.redirect('/management/%d/group'%(newGroupId), True)
 
 
 class ManagementGroup(webapp2.RequestHandler):
@@ -67,7 +70,7 @@ class ManagementGroup(webapp2.RequestHandler):
         # add query and template data
         userData = selectUsersInGroup(int(args[0])).fetch()
         userInfo = [selectUser(i.userMail).get() for i in userData]
-        logging.critical(userInfo)
+
         template_values = {'userInfo': userInfo,
                            'groupId' : int(args[0]),
                            'totalUser' : userData, }
@@ -90,6 +93,36 @@ class InvitationUser(webapp2.RequestHandler):
                            http://temp.temp/management/group%d"""%(groupName, int(args[0])))
 
 
+class GroupRename(webapp2.RequestHandler):
+    def get(self, *args):
+        gid = int(args[0])
+        newName = self.request.get('newName')
+
+        temp = selectGroup(None, groupId=gid)
+        temp.groupName = newName
+        temp.put()
+
+        time.sleep(1)
+        self.redirect('/management/%d/group' % (gid), True)
+
+
+class SecessionUser(webapp2.RequestHandler):
+    def get(self, *args):
+        user = users.get_current_user()
+        userMail = user.email()
+        gid = int(args[0])
+
+        selectMap(userMail, int(gid)).get().key.delete()
+
+        if selectUsersInGroup(gid).count() is 0:
+            selectDeviceWithGroup(gid).fetch().key.delete()
+            selectContentWithGroup(gid).fetch().key.delete()
+
+        time.sleep(1)
+
+        self.redirect_to('management')
+
+
 class ManagementDevice(webapp2.RequestHandler):
     # access mainpage
     @userCheck
@@ -105,24 +138,3 @@ class ManagementContents(webapp2.RequestHandler):
         # add query and template data
         self.response.write(JINJA_ENV.get_template(MANAGEMENT_CONTENTS).render())
 
-
-class DeviceMain(webapp2.RequestHandler):
-    # access mainpage
-    @userCheck
-    def get(self, dkey):
-        # add query and template data
-        self.response.write(JINJA_ENV.get_template(DEVICE_MAIN).render())
-
-
-class DeviceMethod(webapp2.RequestHandler):
-    # access mainpage
-    def get(self, dkey, method):
-        self.response.headers['Content-Type'] = 'application/json'
-        obj = {
-            'dkey': dkey,
-            'dname': '446',
-            'start': '8:00',
-            'end': '20:00'
-        }
-
-        self.response.out.write(json.dumps(obj))
