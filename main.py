@@ -52,6 +52,6 @@ app = webapp2.WSGIApplication([webapp2.Route('/', Main, name='main'),
                                webapp2.Route('/management/<:(\d*)>/group/secession', SecessionUser, name='secession'),
                                webapp2.Route('/management/device', ManagementDevice),
 #                                webapp2.Route('/management/contents', ManagementContents),
-                               webapp2.Route(r'/d/<dkey:\S{8}><:/?>', DeviceMain),
-                               webapp2.Route(r'/d/<dkey:\S{8}>/<method:(info|mod)><:/?>', DeviceMethod),
+                               webapp2.Route(r'/d/<dkey:\S{12}><:/?>', DeviceMain),
+                               webapp2.Route(r'/d/<dkey:\S{12}>/<method:(info|mod)><:/?>', DeviceMethod),
                                ],debug=True)
