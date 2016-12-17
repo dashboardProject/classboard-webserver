@@ -48,9 +48,11 @@ class ManagementGroup(webapp2.RequestHandler):
     @userCheck
     def get(self, *args):
         # add query and template data
+        gid = int(args[0])
+
         userData = selectUsersInGroup(int(args[0])).fetch()
         userInfo = [selectUser(i.userMail).get() for i in userData]
-        groupName = selectGroup(groupId=int(args[0])).get().groupName
+        groupName = selectGroup(None, gid).groupName
 
         template_values = {'userInfo': userInfo,
                            'groupId' : int(args[0]),
@@ -100,7 +102,7 @@ class GroupRename(webapp2.RequestHandler):
         gid = int(args[0])
         newName = self.request.get('newName')
 
-        temp = selectGroup(None, groupId=gid)
+        temp = selectGroup(None, gid)
         temp.groupName = newName
         temp.put()
 
@@ -131,7 +133,7 @@ class ManagementDevice(webapp2.RequestHandler):
     def get(self, *args):
         # add query and template data
         deviceInfo = selectDeviceWithGroup(args[0]).get()
-        groupName = selectGroup(groupId=int(args[0])).get().groupName
+        groupName = selectGroup(None, int(args[0])).groupName
 
         emplate_values = {'userInfo': deviceInfo,
                           'groupId': int(args[0]),
