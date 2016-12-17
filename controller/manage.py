@@ -73,7 +73,7 @@ class MakeGroup(webapp2.RequestHandler):
         groupName = self.request.get('name')
 
         if selectGroup(groupName).count() is 0:
-            newGroupId = Group(groupName = groupName).put().get().key.id()
+            newGroupId = Group(groupName=groupName).put().get().key.id()
             GroupMap(userMail=userMail, groupId=newGroupId).put()
 
         time.sleep(1)
@@ -151,8 +151,13 @@ class AddDevice(webapp2.RequestHandler):
         hashKey = args[2]
         contentId = args[3] if len(args[3]) > 0 else None
 
-        Device(deviceKey=hashKey, deviceName=deviceName, googleCalendarId=contentId,
-               registeredGroupId=gid, registeredUser=userMail).put()
+        temp = selectDeviceWithHashkey(hashKey).get()
+        temp.deviceName = deviceName
+        temp.googleCalendarId = contentId
+        temp.registeredGroupId = gid
+        temp.registeredUser = userMail
+
+        temp.put()
 
 
 class ModifiedDevice(webapp2.RequestHandler):
