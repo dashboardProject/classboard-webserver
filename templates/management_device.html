@@ -165,14 +165,14 @@
                                   </div>
                                   <!-- body -->
                                   <div class="modal-body" margin="auto">
-                                      (*)이름<input type="text" name="newName" class="form-control" placeholder="이름" style="width:300px"><br>
-                                      (*)키<input type="text" name="newName" class="form-control" placeholder="키" style="width:300px;"><br>
-                                      구글 캘린더 ID<input type="text" name="newName" class="form-control" placeholder="구글 캘린더" style="width:300px"><br>
+                                      (*)이름<input type="text" name="deviceName" class="form-control" placeholder="이름" style="width:300px"><br>
+                                      (*)키<input type="text" name="deviceKey" class="form-control" placeholder="키" style="width:300px;"><br>
+                                      구글 캘린더 ID<input type="text" name="calendarId" class="form-control" placeholder="구글 캘린더" style="width:300px"><br>
                                       <br><br><strong>(*)은 필수 입력입니다.</strong>
                                   </div>
                                   <!-- Footer -->
                                   <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">완료</button>
+                                    <button type="button" onclick="registration({{ groupId }})" class="btn btn-default" data-dismiss="modal">등록</button>
                                     <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
                                   </div>
                                 </div>
@@ -191,9 +191,9 @@
                                   </div>
                                   <!-- body -->
                                   <div class="modal-body" margin="auto">
-                                      (*)이름<input type="text" name="newName" class="form-control" placeholder="이름" style="width:300px"><br>
-                                      (*)키<input type="text" name="newName" class="form-control" placeholder="키" style="width:300px;" readonly><br>
-                                      구글 캘린더 ID<input type="text" name="newName" class="form-control" placeholder="구글 캘린더" style="width:300px"><br>
+                                      (*)이름<input type="text" name="newDeviceName" class="form-control" placeholder="이름" style="width:300px"><br>
+                                      (*)키<input type="text" name="_deviceKey" class="form-control" placeholder="키" style="width:300px;" readonly><br>
+                                      구글 캘린더 ID<input type="text" name="newCalendarId" class="form-control" placeholder="구글 캘린더" style="width:300px"><br>
                                       <br><br><strong>(*)은 필수 입력입니다.</strong>
                                   </div>
                                   <!-- Footer -->
@@ -217,6 +217,37 @@
         </div>
         <!-- /#wrapper -->
     </body>
+
+    <script>
+    function registration(gid) {
+        var dName = document.getElementsByName('deviceName')[0].value
+        var dKey = document.getElementsByName('deviceKey')[0].value
+        var CId = document.getElementsByName('calendarId')[0].value
+        alert(dName)
+        if(dName.length > 10){
+            alert('이름은 10자 내로 작성하세요.')
+        }
+
+        else if(dKey.length < 12){
+            alert('잘못된 키를 입력하셨습니다.')
+        }
+
+        else if(dName.length == 0 || dKey.length == 0){
+            alert('필수 입력사항이 작성되지 않았습니다.')
+        }
+
+        else{
+            $.ajax({
+                url : "/management/" + gid + "/device/registration",
+                type: "post",
+                dataType : "json",
+                data : JSON.stringify({"deviceName" : dName,
+                                        "deviceKey" : dKey,
+                                        "calendarId" : CId})
+            })
+        }
+    }
+    </script>
 
     {%  endblock -%}
 
