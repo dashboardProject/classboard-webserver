@@ -20,8 +20,8 @@ from google.appengine.api import users
 from configs import JINJA_ENV, MAIN_PAGE
 from utils.userNgroupQuery import selectUser
 from controller.sign import SignIn, SignUp, ManageUserData
-from controller.manage import Tutorial, Management, ManagementContents, ManagementDevice, ManagementGroup,\
-                                 MakeGroup, InvitationUser, SecessionUser, GroupRename
+from controller.manage import Tutorial, Management, ManagementDevice, ManagementGroup,\
+                                 MakeGroup, InvitationUser, SecessionUser, GroupRename#, ManagementContents
 from controller.device import DeviceMain, DeviceMethod
 
 class Main(webapp2.RequestHandler):
@@ -52,6 +52,6 @@ app = webapp2.WSGIApplication([webapp2.Route('/', Main, name='main'),
                                webapp2.Route('/management/<:(\d*)>/group/secession', SecessionUser, name='secession'),
                                webapp2.Route('/management/device', ManagementDevice),
                                webapp2.Route('/management/contents', ManagementContents),
-                               webapp2.Route(r'/d/<dkey:\S{12}><:/?>', DeviceMain),
-                               webapp2.Route(r'/d/<dkey:\S{12}>/<method:(info|mod)><:/?>', DeviceMethod),
+                               webapp2.Route(r'/d/<dkey:\S{8}><:/?>', DeviceMain),
+                               webapp2.Route(r'/d/<dkey:\S{8}>/<method:(info|mod)><:/?>', DeviceMethod),
                                ],debug=True)
