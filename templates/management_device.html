@@ -86,6 +86,7 @@
 
     {%- block body %}
     <br><br><br><br><br>
+
     <body>
         <div id="wrapper">
             <nav>
@@ -136,6 +137,7 @@
                                             <th>키</th>
                                             <th>컨텐츠등록</th>
                                             <th>디바이스상태</th>
+                                            <th>&nbsp;</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -145,36 +147,64 @@
                                             <td></td>
                                             <td></td>
                                             <td></td>
-
+                                            <td><button data-target="#layerpop2" data-toggle="modal">수정</button>&nbsp;<button>삭제</button> </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
+                            <button data-target="#layerpop" data-toggle="modal">등록</button>
 
-                            <button style="border:0px; width:30px; height:30px; border-radius:15px; -moz-border-radius : 25px; -webkit-border-radius : 25px; -ms-border-radius :25px; -khtml-border-radius : 25px; -o-border-radius :25px; background-color:#fed136" class="btn btn-default" data-target="#layerpop" data-toggle="modal"><div style="color:white;">등록</div></button>
-
-                            <div class="modal fade" id="layerpop">
+                            <div class="modal fade" id="layerpop" style="margin-left: 100px">
                               <div class="modal-dialog">
-                                <div class="modal-content">
+                                <div class="modal-content"style="width:500px">
                                   <!-- header -->
                                   <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">×</button>
                                     <!-- header title -->
-                                    <h4 class="modal-title">도움말</h4>
+                                    <h4 class="modal-title">등록</h4>
                                   </div>
                                   <!-- body -->
-                                  <div class="modal-body">
-                                      <img style="padding-left: 25px" src="/static/img/modal_img.png">
-                                      <br>캘린더 ID : 원하는 캘린더 환경설정에 들어간 뒤,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                      캘린더 ID를 복사+붙여넣기를 해주세요.(위 그림 참고)
+                                  <div class="modal-body" margin="auto">
+                                      (*)이름<input type="text" name="newName" class="form-control" placeholder="이름" style="width:300px"><br>
+                                      (*)키<input type="text" name="newName" class="form-control" placeholder="키" style="width:300px;"><br>
+                                      구글 캘린더 ID<input type="text" name="newName" class="form-control" placeholder="구글 캘린더" style="width:300px"><br>
+                                      <br><br><strong>(*)은 필수 입력입니다.</strong>
                                   </div>
                                   <!-- Footer -->
                                   <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">완료</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+
+                            <div class="modal fade" id="layerpop2" style="margin-left: 100px">
+                              <div class="modal-dialog">
+                                <div class="modal-content"style="width:500px">
+                                  <!-- header -->
+                                  <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">×</button>
+                                    <!-- header title -->
+                                    <h4 class="modal-title">수정</h4>
+                                  </div>
+                                  <!-- body -->
+                                  <div class="modal-body" margin="auto">
+                                      (*)이름<input type="text" name="newName" class="form-control" placeholder="이름" style="width:300px"><br>
+                                      (*)키<input type="text" name="newName" class="form-control" placeholder="키" style="width:300px;" readonly><br>
+                                      구글 캘린더 ID<input type="text" name="newName" class="form-control" placeholder="구글 캘린더" style="width:300px"><br>
+                                      <br><br><strong>(*)은 필수 입력입니다.</strong>
+                                  </div>
+                                  <!-- Footer -->
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">수정</button>
                                     <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
                                   </div>
                                 </div>
                               </div>
                             </div>
+
 
 
                    </div>
