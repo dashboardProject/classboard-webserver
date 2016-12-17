@@ -132,14 +132,14 @@ class ManagementDevice(webapp2.RequestHandler):
     @userCheck
     def get(self, *args):
         # add query and template data
-        deviceInfo = selectDeviceWithGroup(args[0]).get()
+        deviceInfo = selectDeviceWithGroup(int(args[0])).fetch()
         groupName = selectGroup(None, int(args[0])).groupName
 
-        emplate_values = {'userInfo': deviceInfo,
+        template_values = {'deviceInfo': deviceInfo,
                           'groupId': int(args[0]),
                           'groupName': groupName, }
 
-        self.response.write(JINJA_ENV.get_template(MANAGEMENT_DEVICE).render())
+        self.response.write(JINJA_ENV.get_template(MANAGEMENT_DEVICE).render(template_values))
 
 
 class AddDevice(webapp2.RequestHandler):
