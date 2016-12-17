@@ -131,7 +131,8 @@
                         <form class="form-group">
                             <label>그룹명</label>
                             <input type="text" name="newName" class="form-control" value="{{ groupName }}" style="width:400px">
-                            <button type="submit" formaction="/management/{{ groupId }}/group/rename">변경</button>
+                            <div style="height: 8px"></div>
+                            <button class="btn btn-sm" type="submit" formaction="/management/{{ groupId }}/group/rename">변경</button>
                         </form>
 
                         <br><br>
@@ -165,7 +166,8 @@
                         <div class="form-group">
                             <label>관리자 초대</label>
                             <input id="invitaioinMail" class="form-control" placeholder="메일주소 입력" style="width:400px">
-                            <button onclick="invite({{ groupId }})">초대</button>
+                            <div style="height: 8px"></div>
+                            <button class="btn btn-sm" onclick="invite({{ groupId }})">초대</button>
                         </div>
 
                         <br><br>
@@ -173,7 +175,7 @@
                         <h4>그룹탈퇴</h4>
                         <div class="form-group">
                         <h6 style="color:#787878">하단 버튼을 클릭하면 해당 그룹이 탈퇴처리됩니다.</h6>
-                        <button onclick="location.href='/management/{{ groupId }}/group/secession'">탈퇴</button>
+                        <button class="btn btn-sm" onclick="location.href='/management/{{ groupId }}/group/secession'">탈퇴</button>
                         </div>
 
                         <br>
@@ -237,7 +239,7 @@
     <script src="/static/js/jqBootstrapValidation.js"></script>
 
     <!-- Theme JavaScript -->
-    <script src="../static/js/agency.min.js"></script>
+    <script src="/static/js/agency.min.js"></script>
 
 
     <!-- jQuery -->
