@@ -20,8 +20,8 @@ from google.appengine.api import users
 from configs import JINJA_ENV, MAIN_PAGE
 from utils.userNgroupQuery import selectUser
 from controller.sign import SignIn, SignUp, ManageUserData
-from controller.manage import Tutorial, Management, ManagementDevice, ManagementGroup,\
-                                 MakeGroup, InvitationUser, SecessionUser, GroupRename#, ManagementContents
+from controller.manage import Tutorial, Management, ManagementContents, ManagementDevice, ManagementGroup,\
+                                 MakeGroup, InvitationUser, SecessionUser, GroupRename
 from controller.device import DeviceMain, DeviceMethod
 
 class Main(webapp2.RequestHandler):
