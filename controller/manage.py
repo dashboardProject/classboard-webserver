@@ -3,10 +3,10 @@ import time
 import webapp2
 
 import logging
-from database_Model import Group, GroupMap
+from database_Model import Group, GroupMap, Device
 from utils.decorators import userCheck
 from utils.userNgroupQuery import selectUser, selectGroupsOfUser, selectGroup, selectUsersInGroup, selectMap
-from utils.deviceQuery import selectDeviceWithGroup
+from utils.deviceQuery import selectDeviceWithGroup, selectDeviceWithHashkey
 from utils.contentQuery import selectContentWithGroup
 from google.appengine.api import users, mail
 from configs import JINJA_ENV, TUTORIAL_PAGE, MANAGEMENT_PAGE,MANAGEMENT_CONTENTS,\
@@ -43,6 +43,23 @@ class Management(webapp2.RequestHandler):
         self.response.write(JINJA_ENV.get_template(MANAGEMENT_PAGE).render(template_values))
 
 
+class ManagementGroup(webapp2.RequestHandler):
+    # access mainpage
+    @userCheck
+    def get(self, *args):
+        # add query and template data
+        userData = selectUsersInGroup(int(args[0])).fetch()
+        userInfo = [selectUser(i.userMail).get() for i in userData]
+        groupName = selectGroup(groupId=int(args[0])).get().groupName
+
+        template_values = {'userInfo': userInfo,
+                           'groupId' : int(args[0]),
+                           'totalUser' : userData,
+                           'groupName' : groupName, }
+
+        self.response.write(JINJA_ENV.get_template(MANAGEMENT_GROUP).render(template_values))
+
+
 class MakeGroup(webapp2.RequestHandler):
     @userCheck
     def get(self):
@@ -61,21 +78,6 @@ class MakeGroup(webapp2.RequestHandler):
 
         time.sleep(1)
         self.redirect('/management/%d/group'%(newGroupId), True)
-
-
-class ManagementGroup(webapp2.RequestHandler):
-    # access mainpage
-    @userCheck
-    def get(self, *args):
-        # add query and template data
-        userData = selectUsersInGroup(int(args[0])).fetch()
-        userInfo = [selectUser(i.userMail).get() for i in userData]
-
-        template_values = {'userInfo': userInfo,
-                           'groupId' : int(args[0]),
-                           'totalUser' : userData, }
-
-        self.response.write(JINJA_ENV.get_template(MANAGEMENT_GROUP).render(template_values))
 
 
 class InvitationUser(webapp2.RequestHandler):
@@ -126,15 +128,57 @@ class SecessionUser(webapp2.RequestHandler):
 class ManagementDevice(webapp2.RequestHandler):
     # access mainpage
     @userCheck
-    def get(self):
+    def get(self, *args):
         # add query and template data
+        deviceInfo = selectDeviceWithGroup(args[0]).get()
+        groupName = selectGroup(groupId=int(args[0])).get().groupName
+
+        emplate_values = {'userInfo': deviceInfo,
+                          'groupId': int(args[0]),
+                          'groupName': groupName, }
+
         self.response.write(JINJA_ENV.get_template(MANAGEMENT_DEVICE).render())
 
 
-class ManagementContents(webapp2.RequestHandler):
-    # access mainpage
+class AddDevice(webapp2.RequestHandler):
     @userCheck
-    def get(self):
-        # add query and template data
-        self.response.write(JINJA_ENV.get_template(MANAGEMENT_CONTENTS).render())
+    def post(self, *args):
+        user = users.get_current_user()
+        userMail = user.email()
+
+        gid = int(args[0])
+        deviceName = args[1]
+        hashKey = args[2]
+        contentId = args[3] if len(args[3]) > 0 else None
+
+        Device(deviceKey=hashKey, deviceName=deviceName, googleCalendarId=contentId,
+               registeredGroupId=gid, registeredUser=userMail).put()
+
+
+class ModifiedDevice(webapp2.RequestHandler):
+    @userCheck
+    def post(self,*args):
+        user = users.get_current_user()
+        userMail = user.email()
+
+        gid = int(args[0])
+        deviceName = args[1]
+        hashKey = args[2]
+        contentId = args[3] if len(args[3]) > 0 else None
+
+        temp = selectDeviceWithHashkey(hashKey).get()
+        temp.deviceName = deviceName
+        temp.googleCalendarId = contentId
+        temp.put()
+
+
+
+
+
+# class ManagementContents(webapp2.RequestHandler):
+#     # access mainpage
+#     @userCheck
+#     def get(self):
+#         # add query and template data
+#         self.response.write(JINJA_ENV.get_template(MANAGEMENT_CONTENTS).render())
 
