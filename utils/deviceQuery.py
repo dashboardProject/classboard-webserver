@@ -13,4 +13,7 @@ def selectDeviceWithUser(userId):
     return Device.query(Device.madeUser == userId)
 
 def selectDeviceWithGroup(groupId):
-    return Device.query().filter(Device.registeredGroupId == groupId)
+    return Device.query(Device.registeredGroupId == groupId)
+
+def selectDeviceWithHashkey(hkey):
+    return Device.query(Device.deviceKey == hkey)
