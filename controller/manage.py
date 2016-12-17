@@ -48,9 +48,11 @@ class ManagementGroup(webapp2.RequestHandler):
     @userCheck
     def get(self, *args):
         # add query and template data
+        gid = int(args[0])
+
         userData = selectUsersInGroup(int(args[0])).fetch()
         userInfo = [selectUser(i.userMail).get() for i in userData]
-        groupName = selectGroup(groupId=int(args[0])).get().groupName
+        groupName = selectGroup(None, gid).groupName
 
         template_values = {'userInfo': userInfo,
                            'groupId' : int(args[0]),
@@ -73,7 +75,7 @@ class MakeGroup(webapp2.RequestHandler):
         groupName = self.request.get('name')
 
         if selectGroup(groupName).count() is 0:
-            newGroupId = Group(groupName = groupName).put().get().key.id()
+            newGroupId = Group(groupName=groupName).put().get().key.id()
             GroupMap(userMail=userMail, groupId=newGroupId).put()
 
         time.sleep(1)
@@ -100,7 +102,7 @@ class GroupRename(webapp2.RequestHandler):
         gid = int(args[0])
         newName = self.request.get('newName')
 
-        temp = selectGroup(None, groupId=gid)
+        temp = selectGroup(None, gid)
         temp.groupName = newName
         temp.put()
 
@@ -130,14 +132,14 @@ class ManagementDevice(webapp2.RequestHandler):
     @userCheck
     def get(self, *args):
         # add query and template data
-        deviceInfo = selectDeviceWithGroup(args[0]).get()
-        groupName = selectGroup(groupId=int(args[0])).get().groupName
+        deviceInfo = selectDeviceWithGroup(int(args[0])).fetch()
+        groupName = selectGroup(None, int(args[0])).groupName
 
-        emplate_values = {'userInfo': deviceInfo,
+        template_values = {'deviceInfo': deviceInfo,
                           'groupId': int(args[0]),
                           'groupName': groupName, }
 
-        self.response.write(JINJA_ENV.get_template(MANAGEMENT_DEVICE).render())
+        self.response.write(JINJA_ENV.get_template(MANAGEMENT_DEVICE).render(template_values))
 
 
 class AddDevice(webapp2.RequestHandler):
@@ -151,8 +153,13 @@ class AddDevice(webapp2.RequestHandler):
         hashKey = args[2]
         contentId = args[3] if len(args[3]) > 0 else None
 
-        Device(deviceKey=hashKey, deviceName=deviceName, googleCalendarId=contentId,
-               registeredGroupId=gid, registeredUser=userMail).put()
+        temp = selectDeviceWithHashkey(hashKey).get()
+        temp.deviceName = deviceName
+        temp.googleCalendarId = contentId
+        temp.registeredGroupId = gid
+        temp.registeredUser = userMail
+
+        temp.put()
 
 
 class ModifiedDevice(webapp2.RequestHandler):

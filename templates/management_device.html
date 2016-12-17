@@ -86,24 +86,28 @@
 
     {%- block body %}
     <br><br><br><br><br>
+
     <body>
         <div id="wrapper">
             <nav>
                 <div class="navbar-default sidebar" role="navigation">
+
+                    <div style="color:#333333; font-weight: bold; font-size:14px;text-align: center;margin-top:-20px;margin-bottom:20px">{{ groupName }}</div>
+
                     <div class="sidebar-nav navbar-collapse">
                         <ul class="nav" id="side-menu">
 
                             <li>
-                                <a href="/management/group" style="color:#444444"><i class="fa fa-folder-open-o fa-fw"></i> 그룹관리</a>
+                                <a href="/management/{{ groupId }}/group" style="color:#444444"><i class="fa fa-folder-open-o fa-fw"></i> 그룹관리</a>
                             </li>
 
                             <li>
-                                <a href="/management/device" style="color:#444444"><i class="fa fa-wrench fa-fw"></i> 디바이스관리</a>
+                                <a href="/management/{{ groupId }}/device" style="color:#444444"><i class="fa fa-wrench fa-fw"></i> 디바이스관리</a>
                             </li>
 
-                            <li>
+                           <!-- <li>
                                 <a href="/management/contents" style="color:#444444"><i class="fa fa-columns fa-fw"></i> 콘텐츠</a>
-                            </li>
+                            </li> -->
                         </ul>
                     </div>
                     <!-- /.sidebar-collapse -->
@@ -124,7 +128,86 @@
 
                     <!--여기가 내용-->
 
-                    </div>
+                            <div class="table-responsive" style="width:900px">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>&nbsp;</th>
+                                            <th>이름</th>
+                                            <th>키</th>
+                                            <th>컨텐츠등록</th>
+                                            <th>디바이스상태</th>
+                                            <th>&nbsp;</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><input type="checkbox" name="del_info" value=""></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td><button data-target="#layerpop2" data-toggle="modal">수정</button>&nbsp;<button>삭제</button> </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button data-target="#layerpop" data-toggle="modal">등록</button>
+
+                            <div class="modal fade" id="layerpop" style="margin-left: 100px">
+                              <div class="modal-dialog">
+                                <div class="modal-content"style="width:500px">
+                                  <!-- header -->
+                                  <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">×</button>
+                                    <!-- header title -->
+                                    <h4 class="modal-title">등록</h4>
+                                  </div>
+                                  <!-- body -->
+                                  <div class="modal-body" margin="auto">
+                                      (*)이름<input type="text" name="newName" class="form-control" placeholder="이름" style="width:300px"><br>
+                                      (*)키<input type="text" name="newName" class="form-control" placeholder="키" style="width:300px;"><br>
+                                      구글 캘린더 ID<input type="text" name="newName" class="form-control" placeholder="구글 캘린더" style="width:300px"><br>
+                                      <br><br><strong>(*)은 필수 입력입니다.</strong>
+                                  </div>
+                                  <!-- Footer -->
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">완료</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+
+                            <div class="modal fade" id="layerpop2" style="margin-left: 100px">
+                              <div class="modal-dialog">
+                                <div class="modal-content"style="width:500px">
+                                  <!-- header -->
+                                  <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">×</button>
+                                    <!-- header title -->
+                                    <h4 class="modal-title">수정</h4>
+                                  </div>
+                                  <!-- body -->
+                                  <div class="modal-body" margin="auto">
+                                      (*)이름<input type="text" name="newName" class="form-control" placeholder="이름" style="width:300px"><br>
+                                      (*)키<input type="text" name="newName" class="form-control" placeholder="키" style="width:300px;" readonly><br>
+                                      구글 캘린더 ID<input type="text" name="newName" class="form-control" placeholder="구글 캘린더" style="width:300px"><br>
+                                      <br><br><strong>(*)은 필수 입력입니다.</strong>
+                                  </div>
+                                  <!-- Footer -->
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">수정</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+
+
+                   </div>
                 </div>
 
                 <!-- /.row -->

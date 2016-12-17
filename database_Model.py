@@ -24,6 +24,7 @@ class Device(ndb.Model):
     registeredGroupId = ndb.IntegerProperty()
     registeredUser = ndb.StringProperty()
     registeredTime = ndb.DateTimeProperty(auto_now_add=True, indexed=False)
+    accessTime = ndb.DateTimeProperty(auto_now=True, indexed=False)
     # mappedContentId = ndb.IntegerProperty()
 
 
