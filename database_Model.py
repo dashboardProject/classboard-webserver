@@ -18,7 +18,7 @@ class GroupMap(ndb.Model):
 
 
 class Device(ndb.Model):
-    deviceKey = ndb.IntegerProperty()
+    deviceKey = ndb.StringProperty()
     deviceName = ndb.StringProperty()
     googleCalendarId = ndb.StringProperty()
     registeredGroupId = ndb.IntegerProperty()
