@@ -18,12 +18,13 @@ class GroupMap(ndb.Model):
 
 
 class Device(ndb.Model):
-    deviceKey = ndb.IntegerProperty()
+    deviceKey = ndb.StringProperty()
     deviceName = ndb.StringProperty()
     googleCalendarId = ndb.StringProperty()
     registeredGroupId = ndb.IntegerProperty()
     registeredUser = ndb.StringProperty()
     registeredTime = ndb.DateTimeProperty(auto_now_add=True, indexed=False)
+    accessTime = ndb.DateTimeProperty(auto_now=True, indexed=False)
     # mappedContentId = ndb.IntegerProperty()
 
 

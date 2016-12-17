@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
-{% block title %}DashBoard{% endblock %}
+{% block title %}ClassBoard{% endblock %}
 
 {% block head %}
-	<link href="/media/css/d_main.css" rel="stylesheet">
+	<link href="/static/device/css/d_main.css" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -14,8 +14,8 @@
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header" >
-          <img alt="Brand" src="/media/img/kmucs.png" height="70px"style="display: inline;"></img>
-          <h1 style="display: inline; margin-left: 30px; vertical-align: middle;"><b></b></h1>
+          <img alt="Brand" src="/static/device/img/kmucs.png" height="70px"style="display: inline;"></img>
+          <h1 style="display: inline; margin-left: 30px; vertical-align: middle;"><b>장비등록중</b></h1>
         </div>
       </div>
     </nav>
@@ -23,9 +23,12 @@
 
     <div class="container-fluid theme-showcase" role="main" >
 
-		<div class="well" style="text-align: center;">
-			<h1>장비 등록중</h1>
+		<div class="well" style="text-align: center;margin-top: 100px;margin-left: auto;margin-right: auto;display: table;">
+			<h1>장비 인증키</h1>
 			<h1>{{key}}</h1>
+			<h3></h3>
+			<h4>클래스 보드 사이드에 접속하여 장비 인증키를 입력하세요.</h4>
+			<h4>http://www.classboard.co.kr</h4>
 		</div>
 	        <!-- Main jumbotron for a primary marketing message or call to action -->
 	</div>
