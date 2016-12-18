@@ -1,8 +1,9 @@
 var event_array = [];
 
-function groupDate() {
+function groupDate(now) {
+	var start = now.getDate() - now.getDay() +1;
 	for (var ai=0; ai<6; ai++) {
-		var start_day = 20 + ai;
+		var start_day = start + ai;
 		event_array[ai] = [];
 			
 		for (var tj in today_event) {
@@ -18,7 +19,7 @@ function initDate() {
 	var now = new Date();
 	var temp_date = new Date();
 
-	groupDate();
+	groupDate(now);
 
 	if (now.getDay() != 1) {
 		temp_date.setDate(now.getDate() + (1 - now.getDay()));
@@ -70,7 +71,7 @@ function checkClass(){
 	if(day < 0) {
 		document.getElementById("inClass").innerHTML = "빈강의실";
 		document.getElementById("className").innerHTML = "";
-		document.getElementById("professor").innerHTML = "" 
+//		document.getElementById("professor").innerHTML = "" 
 		document.getElementById("classProgress").style.width = '0%';
 		return;
 	}
@@ -91,7 +92,7 @@ function checkClass(){
 			var progress = (total_minutes - class_start_minutes) / (class_end_minutes - class_start_minutes) * 100;
 			document.getElementById("inClass").innerHTML = "강의중";
 			document.getElementById("className").innerHTML = event_array[day][i].title.split('\n')[0];
-			document.getElementById("professor").innerHTML = event_array[day][i].title.split('\n')[1]; 
+//			document.getElementById("professor").innerHTML = event_array[day][i].title.split('\n')[1]; 
 			document.getElementById("classProgress").style.width = progress + '%';
 			inClass = true;
 			break;
@@ -100,7 +101,7 @@ function checkClass(){
 	if(!inClass) {
 		document.getElementById("inClass").innerHTML = "빈강의실";
 		document.getElementById("className").innerHTML = "";
-		document.getElementById("professor").innerHTML = "" 
+//		document.getElementById("professor").innerHTML = "" 
 		document.getElementById("classProgress").style.width = '0%';
 	}
 }
@@ -139,38 +140,3 @@ function dpTime(){
 	}
 }
 
-function init() {
-	initDate();
-	checkClass();
-
-	$(document).ready(function() {
-		$('#calendar').fullCalendar({
-			header: {
-				left: '',
-				center: '',
-				right: ''
-			},
-			timeFormat: 'H시(:mm)',
-			columnFormat: 'ddd M/D',
-			axisFormat: 'a h시',
-			allDaySlot: false,
-			defaultDate: now_date,
-			defaultView: 'agendaWeek',
-			editable: false, 
-			minTime:'08:00:00',
-			height: 'auto', 
-			maxTime:'24:00:00',
-			lang:'ko', 
-			businessHours: {
-				start: '00:00',
-				end: '24:00',
-				dow: [1,2,3,4,5]
-			},
-			now: now_date + 'T11:20:00',
-			events: today_event
-		});
-	});
-
-	// check class one minutes
-	setInterval("dpTime()",1000);
-}

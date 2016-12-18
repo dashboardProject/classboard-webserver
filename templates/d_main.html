@@ -3,92 +3,13 @@
 {% block title %}DashBoard{% endblock %}
 
 {% block head %}
-<link href="/static/device/css/d_main.css" rel="stylesheet">
-<script src="/static/device/js/d_main.js"></script>
+<meta http-equiv='refresh' content='86400;url=/d/{{device.deviceKey}}'>
 
-<script type='text/javascript'>
-	var now_date;
-	var today_event = [];
-	
-	var doReload = function() {
-		doClear();
-		doGetEvents();
-	}
-	
-	var doClear = function(){
-		
-	}
-	
-	var doGetEvents = function(){
-		$.ajax({
-			type : 'get',
-			url : '{{url}}',
-			beforeSend : function(req) {
-			
-			},
-			success : function(data) {
-				today_event = JSON.parse(data);
-				
-				show();
-			},
-		});
-	};
-	
-	$(document).ready(function() {
-		doReload();
-		initDate();
-		checkClass();
-		
-		setInterval("dpTime()",1000);
-	});
-	
-	
-function show() {
-	$('#calendar').fullCalendar({
-					header: {
-						left: '',
-						center: '',
-						right: ''
-					},
-					timeFormat: 'H시(:mm)',
-					columnFormat: 'ddd M/D',
-					axisFormat: 'a h시',
-					allDaySlot: false,
-					defaultDate: now_date,
-					defaultView: 'agendaWeek',
-					editable: false, 
-					minTime:'08:00:00',
-					height: 'auto', 
-					maxTime:'24:00:00',
-					lang:'ko', 
-					businessHours: {
-						start: '00:00',
-						end: '24:00',
-						dow: [1,2,3,4,5]
-					},
-					now: now_date + 'T09:20:00',
-					events: today_event
-				});
-	
-}
-</script>
-
-{% endblock %}
-
-{% block content %}
-
-<body role="document">
 <!-- <link rel='stylesheet' type='text/css' href='/media/libs/fullcalendar-2.3.2/fullcalendar.css' /> -->
 <link rel='stylesheet' type='text/css' href='http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.2/fullcalendar.min.css' />
 
-<!-- <script type='text/javascript' src='/media/libs/fullcalendar-2.3.2/moment.min.js'></script> -->
-<script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js'></script>
 
-<!-- <script type='text/javascript' src='/media/libs/fullcalendar-2.3.2/fullcalendar.min.js'></script> -->
-<script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.2/fullcalendar.min.js'></script>
-
-<!-- <script src='/media/libs/fullcalendar-2.3.2/lang-all.js'></script> -->
-<script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.2/lang/ko.js'></script>
+<link href="/static/device/css/d_main.css" rel="stylesheet">
 
 <style type='text/css'>
 	body {
@@ -110,12 +31,19 @@ function show() {
 
 </style>
 
+{% endblock %}
+
+{% block content %}
+
+<body role="document">
+
+
  <!-- Fixed navbar -->
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header" >
           <img alt="Brand" src="/static/device/img/kmucs.png" height="70px"style="display: inline;"></img>
-          <h1 style="display: inline; margin-left: 30px; vertical-align: middle;"><b>447호</b></h1>
+          <h1 style="display: inline; margin-left: 30px; vertical-align: middle;"><b>{{device.deviceName}}</b></h1>
         </div>
       </div>
     </nav>
@@ -130,21 +58,171 @@ function show() {
 		</div>
 		<div class="col-sm-3" style="text-align: center;">
 			<div class="well">
-				<h2><span class="label label-primary", id="inClass"></span></h2>
+				<h2><span class="label label-primary" id="inClass">빈강의실</span></h2>
 				<div class="progress">
-					<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%", id="classProgress"></div>
+					<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 0%" id="classProgress"></div>
 				</div>
 
-				<h4 id="className"></h4>
-				<h4 id="professor"></h4>
+				<h4 id="className">_</h4>
+<!-- 				<h4 id="professor">_</h4> -->
 
 			</div>
 			<div class="well" style="text-align: center;">
-				<h3 id="dpDate"></h3>
-				<h3 id="dpTime"></h3>
+				<h3 id="dpDate">_</h3>
+				<h3 id="dpTime">_</h3>
+			</div>
+			
+			<div class="well" style="text-align: center;">
+				<h3><strong>K-Hub</strong></h3>
+				<h4>동아리원 모집합니다.<br>gychoi@cs.kookmin.ac.kr</h4>
+				
 			</div>
 		</div>
 	  </div>
 	</div>
+	
+	
+
+<!-- <script type='text/javascript' src='/media/libs/fullcalendar-2.3.2/moment.min.js'></script> -->
+<script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js'></script>
+
+<!-- <script type='text/javascript' src='/media/libs/fullcalendar-2.3.2/fullcalendar.min.js'></script> -->
+<script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.2/fullcalendar.min.js'></script>
+
+<!-- <script src='/media/libs/fullcalendar-2.3.2/lang-all.js'></script> -->
+<script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.2/lang/ko.js'></script>
+
+<script src='/static/device/libs/fullcalendar-2.3.2/gcal.js'></script>
+
+	
+<script src="/static/device/js/d_main.js"></script>
+
+<script type='text/javascript'>
+	var now_date;
+	var today_event = [];
+	
+// 	var doReload = function() {
+// 		doClear();
+// 		doGetEvents();
+// 	}
+	
+// 	var doClear = function(){
+// 		today_event = [];
+// 	}
+	
+// 	var doGetEvents = function(){
+// 		$.ajax({
+// 			type : 'get',
+// 			url : '/{{device.key}}/list',
+// 			beforeSend : function(req) {
+			
+// 			},
+// 			success : function(data) {
+// 				today_event = JSON.parse(data);
+				
+// 				show();
+// 			},
+// 		});
+// 	};
+	
+	var initPage = function(){
+		var view = $('#calendar').fullCalendar('getView');
+		setTimeout(function() {
+			timeData = view.calendar.getEventCache();
+			console.log(timeData);
+			for (var i in timeData) {
+				var aa = {
+		                 title: timeData[i].title,
+		                 start: timeData[i].start._i.split('+')[0],
+		                 end: timeData[i].end._i.split('+')[0]
+		             };
+				today_event.push(aa);
+			}
+			
+// 			console.log(today_event);
+			initDate();
+			checkClass();
+
+		}, 1000);
+				
+	}
+	
+	$(document).ready(function() {
+// 		doReload();
+// 		
+		show();
+		setInterval("dpTime()",1000);
+	});
+	
+// 	var googleCalendarId = 'cs.kookmin.ac.kr_jlsvnq120s019umqqpcscu9ng8@group.calendar.google.com'
+// 	var key = 'AIzaSyDnDylqGlnO6Z0arlMNqzZlaouPWNQ6Zp8'
+// 	var url = 'https://www.googleapis.com/calendar/v3/calendars/' + googleCalendarId + '/events?key='+ key +'&timeMin=2015-11-07T00%3A00%3A00%2B00%3A00&timeMax=2015-11-16T00%3A00%3A00%2B00%3A00&singleEvents=true&maxResults=9999&_=1446991667768'
+
+function show() {
+	$('#calendar').fullCalendar({
+					header: {
+						left: '',
+						center: '',
+						right: ''
+					},
+					timeFormat: 'H시(:mm)',
+					columnFormat: 'ddd M/D',
+					axisFormat: 'a h시',
+					allDaySlot: false,
+// 					defaultDate: now_date,
+					defaultView: 'agendaWeek',
+					editable: false, 
+					minTime:'08:00:00',
+					height: 'auto', 
+					maxTime:'24:00:00',
+					lang:'ko', 
+					businessHours: {
+						start: '00:00',
+						end: '24:00',
+						dow: [1,2,3,4,5]
+					},
+// 					now: now_date + 'T09:20:00',
+// 					events: today_event
+
+					googleCalendarApiKey: 'AIzaSyDnDylqGlnO6Z0arlMNqzZlaouPWNQ6Zp8',
+					eventSources: [
+					    {
+				            googleCalendarId: '{{device.googleCalendarId}}',
+				            success: function() {
+				            	console.log('success');
+				            	initPage();
+				            }
+// 							color:'#c0392b'
+			        	},
+					],
+					
+					viewRender: function( view, element ) {console.log('eee'); }
+					
+// 					events: function(start, end, timezone, callback) {
+// 				        $.ajax({
+// 				            url: url,
+// 				            dataType: 'json',
+// 				            data: {
+// 				                // our hypothetical feed requires UNIX timestamps
+// 				                start: start.unix(),
+// 				                end: end.unix()
+// 				            },
+// 				            success: function(doc) {
+// 				            	console.log(start + " - " + end);
+// 				                var events = [];
+// 				                $(doc).find('event').each(function() {
+// 				                    events.push({
+// 				                        title: $(this).attr('title'),
+// 				                        start: $(this).attr('start') // will be parsed
+// 				                    });
+// 				                });
+// 				                callback(events);
+// 				            }
+// 				        });
+			        
+				});
+	
+}
+</script>
 </body>
 {% endblock %}
