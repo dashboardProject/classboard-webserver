@@ -145,38 +145,48 @@ class ManagementDevice(webapp2.RequestHandler):
 class AddDevice(webapp2.RequestHandler):
     @userCheck
     def post(self, *args):
+        data = json.loads(self.request.body)
         user = users.get_current_user()
         userMail = user.email()
 
         gid = int(args[0])
-        deviceName = args[1]
-        hashKey = args[2]
-        contentId = args[3] if len(args[3]) > 0 else None
+        deviceName = data[u'deviceName']
+        hashKey = data[u'deviceKey']
+        contentId = data[u'calendarId'] if len(data[u'calendarId']) > 0 else None
 
         temp = selectDeviceWithHashkey(hashKey).get()
-        temp.deviceName = deviceName
-        temp.googleCalendarId = contentId
-        temp.registeredGroupId = gid
-        temp.registeredUser = userMail
 
-        temp.put()
+        if temp:
+            temp.deviceName = deviceName
+            temp.googleCalendarId = contentId
+            temp.registeredGroupId = gid
+            temp.registeredUser = userMail
+
+            temp.put()
+
+        self.redirect('/management/%d/device' % (gid), True)
 
 
 class ModifiedDevice(webapp2.RequestHandler):
     @userCheck
     def post(self,*args):
+        data = json.loads(self.request.body)
         user = users.get_current_user()
         userMail = user.email()
 
         gid = int(args[0])
-        deviceName = args[1]
-        hashKey = args[2]
-        contentId = args[3] if len(args[3]) > 0 else None
+        deviceName = data[u'deviceName']
+        hashKey = data[u'deviceKey']
+        contentId = data[u'calendarId'] if len(data[u'calendarId']) > 0 else None
 
         temp = selectDeviceWithHashkey(hashKey).get()
-        temp.deviceName = deviceName
-        temp.googleCalendarId = contentId
-        temp.put()
+
+        if temp:
+            temp.deviceName = deviceName
+            temp.googleCalendarId = contentId
+            temp.put()
+
+        self.redirect('/management/%d/device' % (gid), True)
 
 
 

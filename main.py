@@ -21,7 +21,7 @@ from configs import JINJA_ENV, MAIN_PAGE
 from utils.userNgroupQuery import selectUser
 from controller.sign import SignIn, SignUp, ManageUserData
 from controller.manage import Tutorial, Management, ManagementDevice, ManagementGroup,\
-                                 MakeGroup, InvitationUser, SecessionUser, GroupRename#, ManagementContents
+                                 MakeGroup, InvitationUser, SecessionUser, GroupRename, AddDevice, ModifiedDevice  #, ManagementContents
 from controller.device import DeviceMain, DeviceMethod
 
 class Main(webapp2.RequestHandler):
@@ -51,6 +51,8 @@ app = webapp2.WSGIApplication([webapp2.Route('/', Main, name='main'),
                                webapp2.Route('/management/<:(\d*)>/group/rename', GroupRename, name='rename'),
                                webapp2.Route('/management/<:(\d*)>/group/secession', SecessionUser, name='secession'),
                                webapp2.Route('/management/<:(\d*)>/device', ManagementDevice),
+                               webapp2.Route('/management/<:(\d*)>/device/registration', AddDevice),
+                               webapp2.Route('/management/<:(\d*)>/device/modify', ModifiedDevice),
 #                                webapp2.Route('/management/contents', ManagementContents),
                                webapp2.Route(r'/d/<dkey:\S{12}><:/?>', DeviceMain),
                                webapp2.Route(r'/d/<dkey:\S{12}>/<method:(info|mod)><:/?>', DeviceMethod),

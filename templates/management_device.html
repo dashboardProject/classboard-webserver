@@ -198,7 +198,7 @@
                                   </div>
                                   <!-- Footer -->
                                   <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">수정</button>
+                                    <button type="button" onclick="modify({{ groupId }})" class="btn btn-default" data-dismiss="modal">수정</button>
                                     <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
                                   </div>
                                 </div>
@@ -223,7 +223,7 @@
         var dName = document.getElementsByName('deviceName')[0].value
         var dKey = document.getElementsByName('deviceKey')[0].value
         var CId = document.getElementsByName('calendarId')[0].value
-        alert(dName)
+
         if(dName.length > 10){
             alert('이름은 10자 내로 작성하세요.')
         }
@@ -241,9 +241,34 @@
                 url : "/management/" + gid + "/device/registration",
                 type: "post",
                 dataType : "json",
-                data : JSON.stringify({"deviceName" : dName,
-                                        "deviceKey" : dKey,
-                                        "calendarId" : CId})
+                data : JSON.stringify({"deviceName" : dName, "deviceKey" : dKey, "calendarId" : CId})
+            })
+        }
+    }
+
+    function modify(gid) {
+        var dName = document.getElementsByName('deviceName')[0].value
+        var dKey = document.getElementsByName('deviceKey')[0].value
+        var CId = document.getElementsByName('calendarId')[0].value
+
+        if(dName.length > 10){
+            alert('이름은 10자 내로 작성하세요.')
+        }
+
+        else if(dKey.length < 12){
+            alert('잘못된 키를 입력하셨습니다.')
+        }
+
+        else if(dName.length == 0 || dKey.length == 0){
+            alert('필수 입력사항이 작성되지 않았습니다.')
+        }
+
+        else{
+            $.ajax({
+                url : "/management/" + gid + "/device/registration",
+                type: "post",
+                dataType : "json",
+                data : JSON.stringify({"deviceName" : dName, "deviceKey" : dKey, "calendarId" : CId})
             })
         }
     }
