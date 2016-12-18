@@ -63,11 +63,11 @@ class DeviceMethod(webapp2.RequestHandler):
             status = True
 
         obj = {
-            'dkey': device.deviceKey,
-            'dname': device.deviceName,
+            'dKey': device.deviceKey,
+            'dName': device.deviceName,
             'gCalID': device.googleCalendarId,
             'status': status,
-            'start': '8:00',
+            'start': '08:00',
             'end': '20:00'
         }
         self.response.out.write(json.dumps(obj))
