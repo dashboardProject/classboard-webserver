@@ -47,11 +47,11 @@ class DeviceMethod(webapp2.RequestHandler):
         if device == None :
             deviceAdd(dkey)
             obj = {
-                'dkey': dkey,
-                'dname': None,
+                'dKey': dkey,
+                'dName': None,
                 'gCalID': None,
                 'status': False,
-                'start': '8:00',
+                'start': '08:00',
                 'end': '20:00'
             }
             self.response.out.write(json.dumps(obj))
