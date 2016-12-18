@@ -21,18 +21,19 @@ class DeviceMain(webapp2.RequestHandler):
     def get(self, dkey):
         
         device = utils.deviceQuery.selectDeviceWithHashkey(dkey).get()
-        a='''        
+        #a='''        
         if device == None :
             deviceAdd(dkey)
-            self.response.write(JINJA_ENV.get_template(DEVICE_INIT).render({'key':dkey[:4]+' - '+dkey[4:8]+' - '+dkey[8:]}))            
+            self.response.write(JINJA_ENV.get_template(DEVICE_INIT).render({'dkey':dkey,'key':dkey[:4]+' - '+dkey[4:8]+' - '+dkey[8:]}))            
         elif device.registeredGroupId == None:
-            self.response.write(JINJA_ENV.get_template(DEVICE_INIT).render({'key':dkey[:4]+' - '+dkey[4:8]+' - '+dkey[8:]}))
+            self.response.write(JINJA_ENV.get_template(DEVICE_INIT).render({'dkey':dkey,'key':dkey[:4]+' - '+dkey[4:8]+' - '+dkey[8:]}))
         else:
-            self.response.write(JINJA_ENV.get_template(DEVICE_MAIN).render({'key':dkey,'name':Device.deviceName,'gCal':Device.googleCalendarId}))
-        '''
-        device.deviceName = u'232호'
-        device.googleCalendarId = 'cs.kookmin.ac.kr_l7ahdck9h1if7qas2gfvl8753s@group.calendar.google.com'
-        self.response.write(JINJA_ENV.get_template(DEVICE_MAIN).render({'device':device}))
+            self.response.write(JINJA_ENV.get_template(DEVICE_MAIN).render({'device':device}))
+        #'''
+        
+        #device.deviceName = u'232호'
+        #device.googleCalendarId = 'cs.kookmin.ac.kr_l7ahdck9h1if7qas2gfvl8753s@group.calendar.google.com'
+        #self.response.write(JINJA_ENV.get_template(DEVICE_MAIN).render({'device':device}))
 
 class DeviceMethod(webapp2.RequestHandler):
     # access mainpage
