@@ -74,9 +74,22 @@ class MakeGroup(webapp2.RequestHandler):
 
         groupName = self.request.get('name')
 
-        if selectGroup(groupName).count() is 0:
-            newGroupId = Group(groupName=groupName).put().get().key.id()
-            GroupMap(userMail=userMail, groupId=newGroupId).put()
+        if len(groupName) > 20:
+            groupName = groupName[0:18] + '...'
+
+        count = selectGroup(groupName).count()
+
+        try:
+            if count is 0:
+                newGroupId = Group(groupName=groupName).put().get().key.id()
+                GroupMap(userMail=userMail, groupId=newGroupId).put()
+
+            else:
+                newGroupId = Group(groupName=(groupName + '_%d') % (count+1)).put().get().key.id()
+                GroupMap(userMail=userMail, groupId=newGroupId).put()
+
+        except Exception as e:
+            self.redirect_to('main')
 
         time.sleep(1)
         self.redirect('/management/%d/group'%(newGroupId), True)
@@ -102,11 +115,15 @@ class GroupRename(webapp2.RequestHandler):
         gid = int(args[0])
         newName = self.request.get('newName')
 
-        temp = selectGroup(None, gid)
-        temp.groupName = newName
-        temp.put()
+        try:
+            temp = selectGroup(None, gid)
+            temp.groupName = newName
+            temp.put()
 
-        time.sleep(1)
+            time.sleep(1)
+        except Exception as e:
+            self.redirect_to('main')
+
         self.redirect('/management/%d/group' % (gid), True)
 
 
@@ -154,15 +171,19 @@ class AddDevice(webapp2.RequestHandler):
         hashKey = data[u'deviceKey']
         contentId = data[u'calendarId'] if len(data[u'calendarId']) > 0 else None
 
-        temp = selectDeviceWithHashkey(hashKey).get()
+        try:
+            temp = selectDeviceWithHashkey(hashKey).get()
 
-        if temp:
-            temp.deviceName = deviceName
-            temp.googleCalendarId = contentId
-            temp.registeredGroupId = gid
-            temp.registeredUser = userMail
+            if temp:
+                temp.deviceName = deviceName
+                temp.googleCalendarId = contentId
+                temp.registeredGroupId = gid
+                temp.registeredUser = userMail
 
-            temp.put()
+                temp.put()
+
+        except Exception as e:
+            self.redirect_to('main')
 
         self.redirect('/management/%d/device' % (gid), True)
 
@@ -179,12 +200,16 @@ class ModifiedDevice(webapp2.RequestHandler):
         hashKey = data[u'deviceKey']
         contentId = data[u'calendarId'] if len(data[u'calendarId']) > 0 else None
 
-        temp = selectDeviceWithHashkey(hashKey).get()
+        try:
+            temp = selectDeviceWithHashkey(hashKey).get()
 
-        if temp:
-            temp.deviceName = deviceName
-            temp.googleCalendarId = contentId
-            temp.put()
+            if temp:
+                temp.deviceName = deviceName
+                temp.googleCalendarId = contentId
+                temp.put()
+
+        except Exception as e:
+            self.redirect_to('main')
 
         self.redirect('/management/%d/device' % (gid), True)
 

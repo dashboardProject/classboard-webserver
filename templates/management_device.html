@@ -141,14 +141,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        {% for i in deviceInfo %}
                                         <tr>
                                             <td><input type="checkbox" name="del_info" value=""></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td>{{ i.deviceName }}</td>
+                                            <td>{{ i.deviceKey }}</td>
+                                            <td>{% if i.googleCalendard %} X {% else  %} V {% endif %}</td>
+                                            <td>{{ i.accessTime }}</td>
                                             <td><button data-target="#layerpop2" data-toggle="modal">수정</button>&nbsp;<button>삭제</button> </td>
                                         </tr>
+                                        {% endfor %}
                                     </tbody>
                                 </table>
                             </div>
