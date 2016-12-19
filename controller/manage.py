@@ -6,7 +6,7 @@ import logging
 from database_Model import Group, GroupMap, Device
 from utils.decorators import userCheck
 from utils.userNgroupQuery import selectUser, selectGroupsOfUser, selectGroup, selectUsersInGroup, selectMap
-from utils.deviceQuery import selectDeviceWithGroup, selectDeviceWithHashkey
+from utils.deviceQuery import selectDeviceWithGroup, selectDeviceWithHashkey, selectDeviceWithId
 from utils.contentQuery import selectContentWithGroup
 from google.appengine.api import users, mail
 from configs import JINJA_ENV, TUTORIAL_PAGE, MANAGEMENT_PAGE,MANAGEMENT_CONTENTS,\
@@ -214,7 +214,21 @@ class ModifiedDevice(webapp2.RequestHandler):
         self.redirect('/management/%d/device' % (gid), True)
 
 
+class DeleteDevice(webapp2.RequestHandler):
+    @userCheck
+    def post(self, *args):
+        gid = int(args[0])
+        deviceId = int(args[1])
 
+        try:
+            temp = selectDeviceWithId(deviceId)
+            temp.registeredGroupId = None
+            temp.put()
+
+        except Exception as e:
+            self.redirect_to('main')
+
+        self.redirect('/management/%d/device' % (gid), True)
 
 
 # class ManagementContents(webapp2.RequestHandler):

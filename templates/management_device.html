@@ -148,7 +148,7 @@
                                             <td>{{ i.deviceKey }}</td>
                                             <td>{% if i.googleCalendard %} X {% else  %} V {% endif %}</td>
                                             <td>{{ i.accessTime }}</td>
-                                            <td><button data-target="#layerpop2" data-toggle="modal">수정</button>&nbsp;<button>삭제</button> </td>
+                                            <td><button data-target="#layerpop2" data-toggle="modal">수정</button>&nbsp;<button method="post" href="/management/{{ groupId }}/device/del{{ i.key.id() }}">삭제</button> </td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>
