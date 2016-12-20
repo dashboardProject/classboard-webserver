@@ -1,6 +1,7 @@
 import json
 import time
 import webapp2
+import random
 
 import logging
 from database_Model import Group, GroupMap, Device
@@ -75,17 +76,18 @@ class MakeGroup(webapp2.RequestHandler):
         groupName = self.request.get('name')
 
         if len(groupName) > 20:
-            groupName = groupName[0:18] + '...'
+            groupName = groupName[0:14] + '...'
 
         count = selectGroup(groupName).count()
 
         try:
+            userNickname = selectUser(userMail).get().nickname
             if count is 0:
-                newGroupId = Group(groupName=groupName, makeUserMail=userMail).put().get().key.id()
+                newGroupId = Group(groupName=groupName, makeUserNickname=userNickname).put().get().key.id()
                 GroupMap(userMail=userMail, groupId=newGroupId).put()
 
             else:
-                newGroupId = Group(groupName=(groupName + '_%d') % (count+1)).put().get().key.id()
+                newGroupId = Group(groupName=groupName + '_' + str(random.randrange(0, 1000)), makeUserNickname=userNickname).put().get().key.id()
                 GroupMap(userMail=userMail, groupId=newGroupId).put()
 
         except Exception as e:
@@ -116,10 +118,21 @@ class GroupRename(webapp2.RequestHandler):
         gid = int(args[0])
         newName = self.request.get('newName')
 
+        if len(newName) > 20:
+            newName = newName[0:14] + '...'
+
+        count = selectGroup(groupName).count()
+
         try:
-            temp = selectGroup(None, gid)
-            temp.groupName = newName
-            temp.put()
+            if count is 0:
+                temp = selectGroup(None, gid)
+                temp.groupName = newName
+                temp.put()
+
+            else:
+                temp = selectGroup(None, gid)
+                temp.groupName = newName + '_' + str(random.randrange(0, 1000))
+                temp.put()
 
             time.sleep(1)
         except Exception as e:
