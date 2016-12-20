@@ -39,7 +39,7 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
+    <style media="all">h3, h4, h3+h4 {display: inline;}</style>
 </head>
 
 <body id="page-top" class="index">
@@ -103,7 +103,7 @@
                                             <i class="fa fa-folder-o fa-5x"></i>
                                         </div>
                                         <div class="col-xs-9 text-right">
-                                            <div class="huge"><h3>{{ groupInfo[i].groupName }}</h3></div>
+                                            <div class="huge"><h3>{{ groupInfo[i].groupName }}</h3><h4>({{ groupInfo[i].makeUserMail }})</h4></div>
                                             <div>연결된 디바이스 : {{ deviceCount[i] }}개 </div>
                                         </div>
                                     </div>

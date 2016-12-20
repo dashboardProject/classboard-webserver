@@ -10,6 +10,7 @@ class User(ndb.Model):
 
 class Group(ndb.Model):
     groupName = ndb.StringProperty()
+    makeUserMail = ndb.StringProperty()
 
 
 class GroupMap(ndb.Model):

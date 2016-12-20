@@ -81,7 +81,7 @@ class MakeGroup(webapp2.RequestHandler):
 
         try:
             if count is 0:
-                newGroupId = Group(groupName=groupName).put().get().key.id()
+                newGroupId = Group(groupName=groupName, makeUserMail=userMail).put().get().key.id()
                 GroupMap(userMail=userMail, groupId=newGroupId).put()
 
             else:
