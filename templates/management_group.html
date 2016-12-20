@@ -209,23 +209,6 @@
     }
     </script>
 
-    <script>
-    function secession(gid) {
-        var mail = document.getElementById('invitaioinMail').value
-
-        if(mail.indexOf('@') > 0){
-            $.ajax({
-                url : "/management/group" + gid + "/invite",
-                type: "post",
-                dataType : "json",
-                data : JSON.stringify({"invitationMail" : mail})
-            })
-        }
-        else
-            alert('It does not conform to the format.')
-    }
-    </script>
-
     {%  endblock -%}
 
 

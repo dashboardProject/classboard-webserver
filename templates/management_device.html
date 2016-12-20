@@ -145,10 +145,10 @@
                                         <tr>
                                             <td><input type="checkbox" name="del_info" value=""></td>
                                             <td>{{ i.deviceName }}</td>
-                                            <td>{{ i.deviceKey }}</td>
-                                            <td>{% if i.googleCalendard %} X {% else  %} V {% endif %}</td>
+                                            <td>{{ i.deviceKey[0:4] }}-{{ i.deviceKey[4:8] }}-{{ i.deviceKey[8:12] }}</td>
+                                            <td>{% if i.googleCalendarId %} V {% else  %} X {% endif %}</td>
                                             <td>{{ i.accessTime }}</td>
-                                            <td><button data-target="#layerpop2" data-toggle="modal">수정</button>&nbsp;<button method="post" href="/management/{{ groupId }}/device/del{{ i.key.id() }}">삭제</button> </td>
+                                            <td><button data-toggle="modal" data-key="{{ i.deviceKey }}" data-name="{{ i.deviceName }}" data-cid="{{ i.googleCalendar }}" href="#layerpop2">수정</button>&nbsp;<button method="post" href="/management/{{ groupId }}/device/del{{ i.key.id() }}">삭제</button> </td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>
@@ -168,7 +168,7 @@
                                   <!-- body -->
                                   <div class="modal-body" margin="auto">
                                       (*)이름<input type="text" name="deviceName" class="form-control" placeholder="이름" style="width:300px"><br>
-                                      (*)키<input type="text" name="deviceKey" class="form-control" placeholder="키" style="width:300px;"><br>
+                                      (*)키<input type="text" name="deviceKey" class="form-control" style="width:300px;"><br>
                                       구글 캘린더 ID<input type="text" name="calendarId" class="form-control" placeholder="구글 캘린더" style="width:300px"><br>
                                       <br><br><strong>(*)은 필수 입력입니다.</strong>
                                   </div>
@@ -194,7 +194,7 @@
                                   <!-- body -->
                                   <div class="modal-body" margin="auto">
                                       (*)이름<input type="text" name="newDeviceName" class="form-control" placeholder="이름" style="width:300px"><br>
-                                      (*)키<input type="text" name="_deviceKey" class="form-control" placeholder="키" style="width:300px;" readonly><br>
+                                      (*)키<input type="text" name="fixeddeviceKey" class="form-control" style="width:300px;" readonly><br>
                                       구글 캘린더 ID<input type="text" name="newCalendarId" class="form-control" placeholder="구글 캘린더" style="width:300px"><br>
                                       <br><br><strong>(*)은 필수 입력입니다.</strong>
                                   </div>
@@ -221,16 +221,19 @@
     </body>
 
     <script>
+
+
+
     function registration(gid) {
         var dName = document.getElementsByName('deviceName')[0].value
         var dKey = document.getElementsByName('deviceKey')[0].value
         var CId = document.getElementsByName('calendarId')[0].value
 
-        if(dName.length > 10){
-            alert('이름은 10자 내로 작성하세요.')
+        if(dName.length > 20){
+            alert('이름은 20자 내로 작성하세요.')
         }
 
-        else if(dKey.length < 12){
+        else if(dKey.length != 12){
             alert('잘못된 키를 입력하셨습니다.')
         }
 
@@ -249,25 +252,21 @@
     }
 
     function modify(gid) {
-        var dName = document.getElementsByName('deviceName')[0].value
-        var dKey = document.getElementsByName('deviceKey')[0].value
-        var CId = document.getElementsByName('calendarId')[0].value
+        var dName = document.getElementsByName('newDeviceName')[0].value
+        var dKey = document.getElementsByName('fixeddeviceKey')[0].value
+        var CId = document.getElementsByName('newCalendarId')[0].value
 
-        if(dName.length > 10){
-            alert('이름은 10자 내로 작성하세요.')
+        if(dName.length > 20){
+            alert('이름은 20자 내로 작성하세요.')
         }
 
-        else if(dKey.length < 12){
-            alert('잘못된 키를 입력하셨습니다.')
-        }
-
-        else if(dName.length == 0 || dKey.length == 0){
+        else if(dName.length == 0){
             alert('필수 입력사항이 작성되지 않았습니다.')
         }
 
         else{
             $.ajax({
-                url : "/management/" + gid + "/device/registration",
+                url : "/management/" + gid + "/device/modify",
                 type: "post",
                 dataType : "json",
                 data : JSON.stringify({"deviceName" : dName, "deviceKey" : dKey, "calendarId" : CId})
@@ -282,6 +281,21 @@
 
     <!-- jQuery -->
     <script src="/static/vendor/jquery/jquery.min.js"></script>
+
+
+
+    <script>
+    $(document).ready(function() {
+        $('#layerpop2').on("show.bs.modal", function (e) {
+            var key = $(e.relatedTarget).data('key');
+            var name = $(e.relatedTarget).data('name');
+            var cid = $(e.relatedTarget).data('cid');
+            $(e.currentTarget).find('input[name="fixeddeviceKey"]').val( key );
+            $(e.currentTarget).find('input[name="newDeviceName"]').val( name );
+            $(e.currentTarget).find('input[name="newCalendarId"]').val( cid );
+        });
+    });
+    </script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="/static/vendor/bootstrap/js/bootstrap.min.js"></script>
@@ -301,6 +315,8 @@
     <script src="/static/vendor/metisMenu/metisMenu.min.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="/static/js/sb-admin-2.js"></script>
+
+
 
 </body>
 

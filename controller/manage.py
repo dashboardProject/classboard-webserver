@@ -97,17 +97,18 @@ class MakeGroup(webapp2.RequestHandler):
 
 class InvitationUser(webapp2.RequestHandler):
     def post(self, *args):
+        gid = int(args[0])
         data =json.loads(self.request.body)
         invitationMail = data[u'invitationMail']
 
-        if selectGroupsOfUser(invitationMail).filter(GroupMap.groupId == int(args[0])).count() is 0:
-            GroupMap(userMail=invitationMail, groupId=int(args[0])).put()
+        if selectGroupsOfUser(invitationMail).filter(GroupMap.groupId == gid).count() is 0:
+            GroupMap(userMail=invitationMail, groupId=gid).put()
 
-            groupName = selectGroup(None, int(args[0]))
+            groupName = selectGroup(None, gid)
 
             mail.send_mail(sender='ClassBorad', to=invitationMail, subject='You have been invited to a group.',
                            body="""You have been invited to a group '%s'.
-                           http://temp.temp/management/group%d"""%(groupName, int(args[0])))
+                           http://temp.temp/management/group%d"""%(groupName, gid))
 
 
 class GroupRename(webapp2.RequestHandler):
