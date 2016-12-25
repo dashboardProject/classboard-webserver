@@ -1,9 +1,9 @@
 import webapp2
-import logging
-from configs import *
+
 from functools import wraps
+from database_Model import GroupMap
 from google.appengine.api import users
-from utils.userNgroupQuery import selectUser
+from utils.userNgroupQuery import selectUser, selectUsersInGroup, selectGroupsOfUser
 
 def userCheck(func):
 
@@ -18,6 +18,12 @@ def userCheck(func):
                 return webapp2.redirect_to('signup')
 
             else:
+                if len(args) > 0:
+                    email = user.email()
+                    gid = int(args[0])
+                    if selectGroupsOfUser(email).filter(GroupMap.groupId == gid).count() is 0:
+                        return webapp2.redirect_to('main')
+
                 return func(self, *args)
 
         # not sign-in google account yet

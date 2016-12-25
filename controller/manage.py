@@ -121,7 +121,7 @@ class GroupRename(webapp2.RequestHandler):
         if len(newName) > 20:
             newName = newName[0:14] + '...'
 
-        count = selectGroup(groupName).count()
+        count = selectGroup(newName).count()
 
         try:
             if count is 0:
