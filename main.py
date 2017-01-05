@@ -14,9 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import webapp2
+import webapp2, logging
 
 from google.appengine.api import users
+from utils.decorators import userCheck
 from configs import JINJA_ENV, MAIN_PAGE
 from utils.userNgroupQuery import selectUser
 from controller.sign import SignIn, SignUp, ManageUserData
@@ -28,20 +29,28 @@ class Main(webapp2.RequestHandler):
     # access mainpage
     def get(self):
         user = users.get_current_user()
+        userNickname = ''
 
-        if user and selectUser(user.email()).count is 1:
-            # add query and template data
+        if user and selectUser(user.email()).count() is 1:
+            userNickname = selectUser(user.email()).get().nickname
 
-            self.response.write(JINJA_ENV.get_template(MAIN_PAGE).render())
+        template_values = {'userNickname': userNickname, }
+        self.response.write(JINJA_ENV.get_template(MAIN_PAGE).render(template_values))
 
-        else:
-            self.response.write(JINJA_ENV.get_template(MAIN_PAGE).render())
+class UserInfo(webapp2.RequestHandler):
+    @userCheck
+    def get(self):
+        user = users.get_current_user()
+        userNickname = selectUser(user.email()).get().nickname
+        template_values = {'userMail': user.email(),
+                           'userNickname': userNickname, }
 
-
+        # self.response.write(JINJA_ENV.get_template(....).render(template_values))
         
 app = webapp2.WSGIApplication([webapp2.Route('/', Main, name='main'),
                                webapp2.Route('/signin', SignIn, name='signin'),
                                webapp2.Route('/signup', SignUp, name='signup'),
+                               webapp2.Route('/userinfo', UserInfo, name='userinfo'),
                                webapp2.Route('/updateuserinfo', ManageUserData),
                                webapp2.Route('/tutorial', Tutorial),
                                webapp2.Route('/management', Management, name='management'),

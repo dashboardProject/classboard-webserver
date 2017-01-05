@@ -63,9 +63,15 @@
                         </button>
                     </li>
                     <li>
-                    	<button type="button" method="post" style="background-color: transparent; border: 0ex; text-decoration: none;margin-top:14px;">
-                            <a class="page-scroll" href="/signin">서비스시작</a>
-                        </button>
+                        {% if userNickname|length == 0 %}
+                            <button type="button" method="post" style="background-color: transparent; border: 0ex; text-decoration: none;margin-top:14px;">
+                                <a class="page-scroll" href="/signin">서비스시작</a>
+                            </button>
+                        {% else %}
+                            <button type="button" method="post" style="background-color: transparent; border: 0ex; text-decoration: none;margin-top:14px;">
+                                <a class="page-scroll" href="/userinfo">{{ userNickname }}</a>
+                            </button>
+                        {% endif %}
                     </li>
                 </ul>
             </div>
