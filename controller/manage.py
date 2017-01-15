@@ -28,6 +28,7 @@ class Management(webapp2.RequestHandler):
         try:
             user = users.get_current_user()
             userMail = user.email()
+            userNickname = selectUser(user.email()).get().nickname
             tempList = selectGroupsOfUser(userMail).fetch()
 
             groupList = [selectGroup(None, i.groupId) for i in tempList]
@@ -38,7 +39,8 @@ class Management(webapp2.RequestHandler):
             groupList = []
             deviceCountList = []
 
-        template_values = {'groupInfo': groupList,
+        template_values = {'userNickname': userNickname,
+                           'groupInfo': groupList,
                            'deviceCount': deviceCountList, }
 
         self.response.write(JINJA_ENV.get_template(MANAGEMENT_PAGE).render(template_values))

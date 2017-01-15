@@ -18,7 +18,7 @@ import webapp2, logging
 
 from google.appengine.api import users
 from utils.decorators import userCheck
-from configs import JINJA_ENV, MAIN_PAGE
+from configs import JINJA_ENV, MAIN_PAGE, USERINFO_PAGE
 from utils.userNgroupQuery import selectUser
 from controller.sign import SignIn, SignUp, ManageUserData
 from controller.manage import Tutorial, Management, ManagementDevice, ManagementGroup,\
@@ -45,7 +45,7 @@ class UserInfo(webapp2.RequestHandler):
         template_values = {'userMail': user.email(),
                            'userNickname': userNickname, }
 
-        # self.response.write(JINJA_ENV.get_template(....).render(template_values))
+        self.response.write(JINJA_ENV.get_template(USERINFO_PAGE).render(template_values))
         
 app = webapp2.WSGIApplication([webapp2.Route('/', Main, name='main'),
                                webapp2.Route('/signin', SignIn, name='signin'),

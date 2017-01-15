@@ -1,0 +1,15 @@
+{%- extends "management_main.html" -%}
+{%- block body %}
+
+    <br><br><br><br><br><br>
+
+    <div style="width:1000px; margin:auto">
+        E-MAIL<input type="text" name="fixeddeviceKey" class="form-control" placeholder="{{ userMail }}" style="width:300px" readonly><br>
+        NICKNAME<input type="text" name="newDeviceName" class="form-control" placeholder="{{ userNickname }}" style="width:300px"><br>
+
+        <button type="button" method="post" style="margin: auto">
+            <a href="/userinfo" style="color: black">수정</a>
+        </button>
+    </div>
+
+{% endblock -%}
