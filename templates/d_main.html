@@ -6,8 +6,8 @@
 <meta http-equiv='refresh' content='86400;url=/d/{{device.deviceKey}}'>
 
 <!-- <link rel='stylesheet' type='text/css' href='/media/libs/fullcalendar-2.3.2/fullcalendar.css' /> -->
-<link rel='stylesheet' type='text/css' href='http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.2/fullcalendar.min.css' />
-
+<!-- <link rel='stylesheet' type='text/css' href='http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.2/fullcalendar.min.css' /> -->
+<link rel='stylesheet' type='text/css' href='/static/device/libs/fullcalendar-3.2.0/fullcalendar.min.css' />
 
 <link href="/static/device/css/d_main.css" rel="stylesheet">
 
@@ -17,18 +17,47 @@
 		padding:0;
 		height:100%;
 	 	padding-top: 90px;
+	 	background-color: #ededed;
 	/*   padding-bottom: 30px; */
 	}
 	#calendar {
 		width: 100%;
 		height: 90%;
  		margin: 0 auto; 
+	 	background-color: #fdfdfd;
 	}
 	.fc-toolbar {
 		margin-bottom: 0;
 		height: 0px
 	}
-
+	.fc-time-grid .fc-slats .fc-minor td {
+	    border-top-style: hidden;
+	}
+	.fc-time-grid .fc-slats td.fc-time {
+	    border-top: 0;
+	}
+	.fc-time-grid .fc-slats td span{
+	    position: relative;
+    	top: -10px;
+   	}
+   	.fc-view.fc-listDay-view.fc-list-view.fc-widget-content{
+   		border: 0;
+   	}
+   	#calendar-list .fc-list-heading {
+   		display: none;
+   	}
+	.well {
+	 	background-color: #fdfdfd;
+	}
+	.box-shadow {
+		box-shadow: 0px 2px 11px -5px #000000;
+	}
+	.shadow {
+		box-shadow: 0px 0px 010px -3px #000000;
+	}
+	.fc-event {
+		border: 0;
+	}
 </style>
 
 {% endblock %}
@@ -39,40 +68,44 @@
 
 
  <!-- Fixed navbar -->
-    <nav class="navbar navbar-default navbar-fixed-top">
+    <nav class="navbar navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header" >
           <img alt="Brand" src="/static/device/img/kmucs.png" height="70px"style="display: inline;"></img>
           <h1 style="display: inline; margin-left: 30px; vertical-align: middle;"><b>{{device.deviceName}}</b></h1>
         </div>
+		  <h2 id="dpTime" class="navbar-right" style="display: inline; margin-right: 30px; vertical-align: middle;"></h2>
+          <h2 id="dpDate" class="navbar-right" style="display: inline; margin-right: 30px; vertical-align: middle;"></h2>
       </div>
     </nav>
  
  
     <div class="container-fluid theme-showcase" role="main" >
 
-	        <!-- Main jumbotron for a primary marketing message or call to action -->
-      <div class="row" >
-      	<div class="col-sm-9" >
-			<div id='calendar'></div>
-		</div>
-		<div class="col-sm-3" style="text-align: center;">
-			<div class="well">
-				<h2><span class="label label-primary" id="inClass">빈강의실</span></h2>
-				<div class="progress">
+	<div class="row" >
+      	<div class="col-sm-8 col-sm-offset-2" >
+      		<div class="well box-shadow" style="text-align: center; height: 300px;">
+				<div class="progress" style="margin-bottom: 80px;">
 					<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 0%" id="classProgress"></div>
 				</div>
-
-				<h4 id="className">_</h4>
+				<h1><span class="label label-primary" id="inClass">빈강의실</span></h1>
+				<h1 id="className">_</h1>
 <!-- 				<h4 id="professor">_</h4> -->
 
 			</div>
-			<div class="well" style="text-align: center;">
-				<h3 id="dpDate">_</h3>
-				<h3 id="dpTime">_</h3>
+		</div>
+	</div>
+		
+      <div class="row" >
+      	<div class="col-sm-9" >
+			<div class="box-shadow" id='calendar'></div>
+		</div>
+		<div class="col-sm-3">
+			<div class="well box-shadow" >
+				<h4>수업목록</h4>
+				<div class="" id='calendar-list'></div>
 			</div>
-			
-			<div class="well" style="text-align: center;">
+			<div class="well box-shadow" style="text-align: center;">
 				<h3><strong>* 강의실 주의사항 *</strong></h3>
 				<h4>음식물 반입금지<br>사용 후 깨끗이 정리</h4>
 				
@@ -87,12 +120,14 @@
 <script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js'></script>
 
 <!-- <script type='text/javascript' src='/media/libs/fullcalendar-2.3.2/fullcalendar.min.js'></script> -->
-<script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.2/fullcalendar.min.js'></script>
+<!-- <script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.2/fullcalendar.min.js'></script> -->
+<script type='text/javascript' src='/static/device/libs/fullcalendar-3.2.0/fullcalendar.min.js'></script>
 
 <!-- <script src='/media/libs/fullcalendar-2.3.2/lang-all.js'></script> -->
-<script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.2/lang/ko.js'></script>
+<!-- <script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.2/lang/ko.js'></script> -->
+<script src='/static/device/libs/fullcalendar-3.2.0/ko.js'></script>
 
-<script src='/static/device/libs/fullcalendar-2.3.2/gcal.js'></script>
+<script src='/static/device/libs/fullcalendar-3.2.0/gcal.js'></script>
 
 	
 <script src="/static/device/js/d_main.js"></script>
@@ -160,22 +195,19 @@
 
 function show() {
 	$('#calendar').fullCalendar({
-					header: {
-						left: '',
-						center: '',
-						right: ''
-					},
-					timeFormat: 'H시(:mm)',
+					header: false,
+					timeFormat: 'H시(mm)',
 					columnFormat: 'ddd M/D',
-					axisFormat: 'a h시',
+					slotLabelFormat: 'a h',
 					allDaySlot: false,
 // 					defaultDate: now_date,
 					defaultView: 'agendaWeek',
 					editable: false, 
-					minTime:'08:00:00',
+					minTime:'08:30:00',
 					height: 'auto', 
-					maxTime:'24:00:00',
+					maxTime:'21:30:00',
 					lang:'ko', 
+					timezone: 'Asia/Seoul',
 					businessHours: {
 						start: '00:00',
 						end: '24:00',
@@ -191,8 +223,8 @@ function show() {
 				            success: function() {
 				            	console.log('success');
 				            	initPage();
-				            }
-// 							color:'#c0392b'
+				            },
+// 							color:'#2196F3'
 			        	},
 					],
 					
@@ -222,6 +254,27 @@ function show() {
 			        
 				});
 	
+	
+	$('#calendar-list').fullCalendar({
+		header: false,
+		timeFormat: 'H:mm',
+		allDaySlot: false,
+		defaultView: 'listDay',
+		editable: false, 
+		height: 340, 
+		lang:'ko', 
+		timezone: 'Asia/Seoul',
+		googleCalendarApiKey: 'AIzaSyDnDylqGlnO6Z0arlMNqzZlaouPWNQ6Zp8',
+		eventSources: [
+		    {
+	            googleCalendarId: '{{device.googleCalendarId}}',
+//					color:'#c0392b'
+        	},
+		],
+		
+		viewRender: function( view, element ) {console.log('eee'); }
+		
+	});
 }
 </script>
 </body>
