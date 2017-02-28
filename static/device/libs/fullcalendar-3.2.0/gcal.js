@@ -135,6 +135,7 @@ function transformOptions(sourceOptions, start, end, timezone, calendar) {
 				reportError('Google Calendar API: ' + data.error.message, data.error.errors);
 			}
 			else if (data.items) {
+
 				$.each(data.items, function(i, entry) {
 					var url = entry.htmlLink || null;
 
@@ -150,7 +151,9 @@ function transformOptions(sourceOptions, start, end, timezone, calendar) {
 						end: entry.end.dateTime || entry.end.date, // same
 						url: url,
 						location: entry.location,
-						description: entry.description
+						description: entry.description,
+						// 수정했음.
+						sequence: entry.sequence
 					});
 				});
 
@@ -161,7 +164,7 @@ function transformOptions(sourceOptions, start, end, timezone, calendar) {
 					return successRes;
 				}
 			}
-
+			
 			return events;
 		}
 	});

@@ -94,6 +94,8 @@ function checkClass(){
 			document.getElementById("className").innerHTML = event_array[day][i].title.split('\n')[0];
 //			document.getElementById("professor").innerHTML = event_array[day][i].title.split('\n')[1]; 
 			document.getElementById("classProgress").style.width = progress + '%';
+			$('#inClass').removeClass('label-primary');
+			$('#inClass').addClass('label-danger');
 			inClass = true;
 			break;
 		} 
@@ -103,6 +105,8 @@ function checkClass(){
 		document.getElementById("className").innerHTML = "";
 //		document.getElementById("professor").innerHTML = "" 
 		document.getElementById("classProgress").style.width = '0%';
+		$('#inClass').removeClass('label-danger');
+		$('#inClass').addClass('label-primary');
 	}
 }
 

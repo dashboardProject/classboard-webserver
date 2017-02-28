@@ -51,7 +51,7 @@ class DeviceMethod(webapp2.RequestHandler):
                 'dName': None,
                 'gCalID': None,
                 'status': False,
-                'start': '08:00',
+                'start': '00:00',
                 'end': '20:00'
             }
             self.response.out.write(json.dumps(obj))
@@ -67,7 +67,7 @@ class DeviceMethod(webapp2.RequestHandler):
             'dName': device.deviceName,
             'gCalID': device.googleCalendarId,
             'status': status,
-            'start': '08:00',
+            'start': '00:00',
             'end': '20:00'
         }
         self.response.out.write(json.dumps(obj))
