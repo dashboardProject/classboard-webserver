@@ -215,6 +215,7 @@ function show() {
 					maxTime:'21:30:00',
 					lang:'ko', 
 					timezone: 'Asia/Seoul',
+					displayEventTime:false,
 					businessHours: {
 						start: '00:00',
 						end: '24:00',
@@ -290,12 +291,11 @@ function show() {
 		eventRender: function (event, element) {
 
 			test = element;
-			if (event.sequence == 1) {
-				element.find('.fc-event-dot').css('background-color', '#2196F3');
-// 				test = element;
+			if (event.sequence == 0) {
+				element.find('.fc-event-dot').css('background-color', '#4CAF50');
 			}
 			else {
-				element.find('.fc-event-dot').css('background-color', '#4CAF50');
+				element.find('.fc-event-dot').css('background-color', '#2196F3');
 			}
 		},
 		
