@@ -39,6 +39,7 @@ class DeviceMethod(webapp2.RequestHandler):
     # access mainpage
     def get(self, dkey, method):
         
+        ticVal = time.strftime("%Y%m%d%H",time.localtime());
         
         self.response.headers['Content-Type'] = 'application/json'
             
@@ -49,10 +50,12 @@ class DeviceMethod(webapp2.RequestHandler):
             obj = {
                 'dKey': dkey,
                 'dName': None,
-                'gCalID': None,
+#                'gCalID': None,
+                'gCalID': ticVal,
                 'status': False,
-                'start': '00:00',
-                'end': '20:00'
+                'start': '08:00',
+                'end': '20:00',
+#                'tic': ticVal
             }
             self.response.out.write(json.dumps(obj))
             return
@@ -65,10 +68,12 @@ class DeviceMethod(webapp2.RequestHandler):
         obj = {
             'dKey': device.deviceKey,
             'dName': device.deviceName,
-            'gCalID': device.googleCalendarId,
+            #'gCalID': device.googleCalendarId,
+            'gCalID': ticVal,
             'status': status,
-            'start': '00:00',
-            'end': '20:00'
+            'start': '08:00',
+            'end': '21:00',
+            #'tic': ticVal
         }
         self.response.out.write(json.dumps(obj))
         
