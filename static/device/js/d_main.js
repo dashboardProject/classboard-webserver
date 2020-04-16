@@ -97,11 +97,11 @@ function checkClass(){
 			$('#navbar').addClass('action');
 			$('#header').addClass('action');
 			
-			if (event_array[day][i].sequence == 1) {
-				$('#header').css('background-color', '#2196F3');
+			if (event_array[day][i].sequence == 0) {
+				$('#header').css('background-color', '#4CAF50');
 			}
 			else {
-				$('#header').css('background-color', '#4CAF50');
+				$('#header').css('background-color', '#2196F3');
 			}
 			
 			inClass = true;
