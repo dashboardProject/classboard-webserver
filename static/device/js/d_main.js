@@ -90,12 +90,20 @@ function checkClass(){
 		console.log(class_start_minutes, class_end_minutes);
 		if (total_minutes > class_start_minutes && total_minutes < class_end_minutes) {
 			var progress = (total_minutes - class_start_minutes) / (class_end_minutes - class_start_minutes) * 100;
-			document.getElementById("inClass").innerHTML = "강의중";
-			document.getElementById("className").innerHTML = event_array[day][i].title.split('\n')[0];
+			document.getElementById("className").innerHTML = event_array[day][i].title.split('\n')[0].replace(/_/gi, "<p></p>");;
 //			document.getElementById("professor").innerHTML = event_array[day][i].title.split('\n')[1]; 
 			document.getElementById("classProgress").style.width = progress + '%';
-			$('#inClass').removeClass('label-primary');
-			$('#inClass').addClass('label-danger');
+			
+			$('#navbar').addClass('action');
+			$('#header').addClass('action');
+			
+			if (event_array[day][i].sequence == 1) {
+				$('#header').css('background-color', '#2196F3');
+			}
+			else {
+				$('#header').css('background-color', '#4CAF50');
+			}
+			
 			inClass = true;
 			break;
 		} 
@@ -105,28 +113,29 @@ function checkClass(){
 		document.getElementById("className").innerHTML = "";
 //		document.getElementById("professor").innerHTML = "" 
 		document.getElementById("classProgress").style.width = '0%';
-		$('#inClass').removeClass('label-danger');
-		$('#inClass').addClass('label-primary');
+		$('#navbar').removeClass('action');
+		$('#header').removeClass('action');
+		$('#header').css('background-color', '#FFF');
 	}
 }
 
 var onClassChecker = false;
 function dpTime(){
 	var now = new Date();
-	date = now.getFullYear() + "년 " + (now.getMonth()+1) + "월 " + now.getDate() + "일 "; 
+	date = now.getFullYear() + "/ " + (now.getMonth()+1) + "/ " + now.getDate(); 
 	hours = now.getHours();
 	minutes = now.getMinutes();
 	seconds = now.getSeconds();
 			 
 	if (hours > 12){
 		hours -= 12;
-		ampm = "오후 ";
+		ampm = "p ";
 	}else{
-		ampm = "오전 ";
+		ampm = "a ";
 	}
-	if (hours < 10){
-		hours = "0" + hours;
-	}
+//	if (hours < 10){
+//		hours = "0" + hours;
+//	}
 	if (minutes < 10){
 		minutes = "0" + minutes;
 	}
