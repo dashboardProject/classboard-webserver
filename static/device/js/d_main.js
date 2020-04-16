@@ -129,9 +129,9 @@ function dpTime(){
 			 
 	if (hours > 12){
 		hours -= 12;
-		ampm = "p ";
+		ampm = "pm ";
 	}else{
-		ampm = "a ";
+		ampm = "am ";
 	}
 //	if (hours < 10){
 //		hours = "0" + hours;
