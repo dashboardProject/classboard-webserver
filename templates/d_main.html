@@ -16,14 +16,14 @@
 		margin:0;
 		padding:0;
 		height:100%;
-	 	padding-top: 90px;
+/* 	 	padding-top: 90px; */
 	 	background-color: #ededed;
 	/*   padding-bottom: 30px; */
 	}
 	#calendar {
 		width: 100%;
 		height: 90%;
- 		margin: 0 auto; 
+ 		margin: 0 auto;
 	 	background-color: #fdfdfd;
 	}
 	.fc-toolbar {
@@ -62,6 +62,55 @@
 		border-width: 0;
 		padding: 6px 6px;
 	}
+	.doc-jumbotron{
+		background-color: #fff;
+		padding-top: 70px;
+    	padding-bottom: 30px;
+    	height: 390px;
+	    position: relative;
+	}
+	.doc-jumbotron.action{
+		background-color: #B71C1C;
+		color:#fff;
+	}
+	.doc-jumbotron .progress2 {
+	    margin-bottom: 0;
+	    position: absolute;
+	    bottom: 0;
+	    width: 100%;
+        height: 10px;
+    }
+    .doc-jumbotron #inClass {
+    	display: inline;
+    }
+    .doc-jumbotron.action #inClass {
+    	display: none;
+    }
+	#brand_w{
+		display: inline;
+	}
+    #brand_d{
+    	display: none;
+    }
+    .navbar.navbar-fixed-top{
+    	color:#333;
+    }
+    .navbar.navbar-fixed-top .label{
+    	display: none;
+    }
+    .navbar.navbar-fixed-top.action{
+    	color: #fff;
+    }
+    .navbar.navbar-fixed-top.action #brand_w {
+    	display: none;
+    }
+    .navbar.navbar-fixed-top.action #brand_d {
+    	display: inline;
+    }
+    .navbar.navbar-fixed-top.action .label{
+    	display: inline;
+    }
+
 </style>
 
 {% endblock %}
@@ -72,34 +121,39 @@
 
 
  <!-- Fixed navbar -->
-    <nav class="navbar navbar-fixed-top">
+    <nav class="navbar navbar-fixed-top" id="navbar">
       <div class="container-fluid">
         <div class="navbar-header" >
-          <img alt="Brand" src="/static/device/img/kmucs.png" height="70px"style="display: inline;"></img>
-          <h1 style="display: inline; margin-left: 30px; vertical-align: middle;"><b>{{device.deviceName}}</b></h1>
+          <img alt="Brand" src="/static/device/img/kmusw.png" height="65px" id="brand_w"></img>
+          <img alt="Brand" src="/static/device/img/kmusw_dark.png" height="65px" id="brand_d"></img>
+          <h1 style="display: inline; margin-left: 30px; vertical-align: middle;"><b>{{device.deviceName}}</b> <span class="label" style="background-color: #B71C1C">강의중</span></h1>
         </div>
 		  <h2 id="dpTime" class="navbar-right" style="display: inline; margin-right: 30px; vertical-align: middle;"></h2>
           <h2 id="dpDate" class="navbar-right" style="display: inline; margin-right: 30px; vertical-align: middle;"></h2>
       </div>
     </nav>
- 
- 
+
+    <div class="jumbotron jumbotron-fluid mb-xl doc-jumbotron shadow" id="header">
+	    <div class="container">
+	      <div class="row">
+	        <div class="col-sm-8 col-sm-offset-2" >
+				<div style=" text-align: center;    padding-top: 50px;">
+					<h1><span class="label label-primary" id="inClass">빈강의실</span></h1>
+					<h1 id="className"></h1>
+	<!-- 				<h4 id="professor">_</h4> -->
+				</div>
+			</div>
+	      </div>
+	    </div>
+
+	    <div class="progress2">
+			<div class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 0%" id="classProgress"></div>
+		</div>
+	  </div>
+
+
     <div class="container-fluid theme-showcase" role="main" >
 
-	<div class="row" >
-      	<div class="col-sm-8 col-sm-offset-2" >
-      		<div class="well box-shadow" style="text-align: center; height: 300px;">
-				<div class="progress" style="margin-bottom: 70px;">
-					<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 0%" id="classProgress"></div>
-				</div>
-				<h1><span class="label label-primary" id="inClass">빈강의실</span></h1>
-				<h1 id="className" style="font-size: 45px;"></h1>
-<!-- 				<h4 id="professor">_</h4> -->
-
-			</div>
-		</div>
-	</div>
-		
       <div class="row" >
       	<div class="col-sm-9" >
 			<div class="box-shadow" id='calendar'></div>
@@ -110,15 +164,14 @@
 				<div class="" id='calendar-list'></div>
 			</div>
 			<div class="well box-shadow" style="text-align: center;">
-				<h3><strong>* 강의실 주의사항 *</strong></h3>
-				<h4>음식물 반입금지<br>사용 후 깨끗이 정리</h4>
-				
+				<img alt="" src="/static/device/img/class.cs.png" style="width: 83px">
+				<p style="margin: 0">http://class.cs.kookmin.ac.kr</p>
 			</div>
 		</div>
 	  </div>
 	</div>
-	
-	
+
+
 
 <!-- <script type='text/javascript' src='/media/libs/fullcalendar-2.3.2/moment.min.js'></script> -->
 <script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js'></script>
@@ -133,37 +186,37 @@
 
 <script src='/static/device/libs/fullcalendar-3.2.0/gcal.js'></script>
 
-	
+
 <script src="/static/device/js/d_main.js"></script>
 
 <script type='text/javascript'>
 	var now_date;
 	var today_event = [];
-	
+
 // 	var doReload = function() {
 // 		doClear();
 // 		doGetEvents();
 // 	}
-	
+
 // 	var doClear = function(){
 // 		today_event = [];
 // 	}
-	
+
 // 	var doGetEvents = function(){
 // 		$.ajax({
 // 			type : 'get',
 // 			url : '/{{device.key}}/list',
 // 			beforeSend : function(req) {
-			
+
 // 			},
 // 			success : function(data) {
 // 				today_event = JSON.parse(data);
-				
+
 // 				show();
 // 			},
 // 		});
 // 	};
-	
+
 	var initPage = function(){
 		var view = $('#calendar').fullCalendar('getView');
 		setTimeout(function() {
@@ -173,26 +226,27 @@
 				var aa = {
 		                 title: timeData[i].title,
 		                 start: timeData[i].start._i.split('+')[0],
-		                 end: timeData[i].end._i.split('+')[0]
+		                 end: timeData[i].end._i.split('+')[0],
+		                 sequence: timeData[i].sequence
 		             };
 				today_event.push(aa);
 			}
-			
+
 // 			console.log(today_event);
 			initDate();
 			checkClass();
 
 		}, 1000);
-				
+
 	}
-	
+
 	$(document).ready(function() {
 // 		doReload();
-// 		
+//
 		show();
 		setInterval("dpTime()",1000);
 	});
-	
+
 // 	var googleCalendarId = 'cs.kookmin.ac.kr_jlsvnq120s019umqqpcscu9ng8@group.calendar.google.com'
 // 	var key = 'AIzaSyDnDylqGlnO6Z0arlMNqzZlaouPWNQ6Zp8'
 // 	var url = 'https://www.googleapis.com/calendar/v3/calendars/' + googleCalendarId + '/events?key='+ key +'&timeMin=2015-11-07T00%3A00%3A00%2B00%3A00&timeMax=2015-11-16T00%3A00%3A00%2B00%3A00&singleEvents=true&maxResults=9999&_=1446991667768'
@@ -208,12 +262,12 @@ function show() {
 					allDaySlot: false,
 // 					defaultDate: now_date,
 					defaultView: 'agendaWeek',
-					editable: false, 
+					editable: false,
 					minTime:'08:30:00',
-					height: 'auto', 
+					height: 'auto',
 					nowIndicator:true,
 					maxTime:'21:30:00',
-					lang:'ko', 
+					lang:'ko',
 					timezone: 'Asia/Seoul',
 					displayEventTime:false,
 					businessHours: {
@@ -235,9 +289,9 @@ function show() {
 // 							color:'#2196F3'
 			        	},
 					],
-					
+
 					viewRender: function( view, element ) {console.log('eee'); },
-					
+
 					eventRender: function (event, element) {
 
 						if (event.sequence == 0) {
@@ -268,18 +322,19 @@ function show() {
 // 				                callback(events);
 // 				            }
 // 				        });
-			        
+
 				});
-	
-	
+
+
 	$('#calendar-list').fullCalendar({
 		header: false,
 		timeFormat: 'H:mm',
 		allDaySlot: false,
 		defaultView: 'listDay',
-		editable: false, 
-		height: 340, 
-		lang:'ko', 
+		editable: false,
+		nowIndicator:true,
+		height: 340,
+		lang:'ko',
 		timezone: 'Asia/Seoul',
 		googleCalendarApiKey: 'AIzaSyDnDylqGlnO6Z0arlMNqzZlaouPWNQ6Zp8',
 		eventSources: [
@@ -290,17 +345,17 @@ function show() {
 		],
 		eventRender: function (event, element) {
 
-			test = element;
 			if (event.sequence == 0) {
 				element.find('.fc-event-dot').css('background-color', '#4CAF50');
+// 				test = element;
 			}
 			else {
 				element.find('.fc-event-dot').css('background-color', '#2196F3');
 			}
 		},
-		
+
 		viewRender: function( view, element ) {console.log('eee'); }
-		
+
 	});
 }
 </script>
