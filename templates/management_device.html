@@ -145,7 +145,11 @@
                                         <tr>
                                             <td><input type="checkbox" name="del_info" value=""></td>
                                             <td>{{ i.deviceName }}</td>
-                                            <td>{{ i.deviceKey[0:4] }}-{{ i.deviceKey[4:8] }}-{{ i.deviceKey[8:12] }}</td>
+                                            <td>
+                                                <a href="/d/{{i.deviceKey}}" target="_blank" style="color: #337ab7;">
+                                                    {{ i.deviceKey[0:4] }}-{{ i.deviceKey[4:8] }}-{{ i.deviceKey[8:12] }}
+                                                </a>
+                                            </td>
                                             <td>{% if i.googleCalendarId %} V {% else  %} X {% endif %}</td>
                                             <td>{{ i.accessTime }}</td>
                                             <td><button data-toggle="modal" data-key="{{ i.deviceKey }}" data-name="{{ i.deviceName }}" data-cid="{{ i.googleCalendar }}" href="#layerpop2">수정</button>&nbsp;<button method="post" href="/management/{{ groupId }}/device/del{{ i.key.id() }}">삭제</button> </td>
